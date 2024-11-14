@@ -24,7 +24,7 @@ Pomodoro Tracker helps you manage your work intervals using the Pomodoro Techniq
 
 1. Clone the repository
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/devfercastro/focustime.git
 ```
 
 2. Install dependencies
@@ -55,22 +55,3 @@ This project is built with Expo and React Native. To contribute or modify:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-```
-
-This README provides:
-1. A brief description of the project
-2. Technology stack
-3. Setup instructions
-4. Basic feature list
-5. Development workflow
-6. License information
-
-You can customize it further by:
-- Adding screenshots
-- Including more detailed usage instructions
-- Adding badges (build status, version, etc.)
-- Including contributing guidelines
-- Adding contact information
