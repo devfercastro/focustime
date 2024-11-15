@@ -1,4 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import CircularProgressBar from "./components/CircularProgressBar";
+
+const BORDER = 20;
 
 export default function App() {
   const startHandler = () => {
@@ -13,6 +16,12 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}>Pomodoro Tracker</Text>
       <View style={styles.timerContainer}>
+        <CircularProgressBar
+          style={styles.progressBar}
+          width={200}
+          strokeWidth={BORDER}
+          color="#000"
+        />
         <Text style={styles.timer}>25:00</Text>
       </View>
       <View style={styles.controlsContainer}>
@@ -43,13 +52,19 @@ const styles = StyleSheet.create({
   },
 
   timerContainer: {
-    width: 250,
-    height: 250,
+    width: 200,
+    height: 200,
     borderRadius: 125,
-    borderWidth: 20,
+    borderWidth: BORDER,
     borderColor: "#e0e0e0",
     alignItems: "center",
     justifyContent: "center",
+    position: "relative",
+  },
+  progressBar: {
+    position: "absolute",
+    top: -BORDER,
+    left: -BORDER,
   },
   timer: {
     fontSize: 48,
