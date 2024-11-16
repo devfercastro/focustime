@@ -21,6 +21,7 @@ export default function App() {
           width={200}
           strokeWidth={BORDER}
           color="#000"
+          progress={0.2}
         />
         <Text style={styles.timer}>25:00</Text>
       </View>
