@@ -23,6 +23,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0f927879-989d-4113-b670-c74b237b2821"
+      }
+    },
+    "owner": "devfercastro"
   }
 }
