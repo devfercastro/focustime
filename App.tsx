@@ -1,15 +1,73 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import CircularProgressBar from "./components/CircularProgressBar";
+import { useState, useEffect } from "react";
 
 const BORDER = 20;
+const POMODORO_TIME = 1 * 60;
+
+type appStatus = {
+  isRunning: boolean;
+  mode: "work" | "break";
+};
+
+function formatTime(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+}
+
+function formatProgress(currentTime: number, totalTime: number) {
+  return currentTime / totalTime;
+}
 
 export default function App() {
+  const [timeLeft, setTimeLeft] = useState(POMODORO_TIME);
+  const [appStatus, setAppStatus] = useState<appStatus>({
+    isRunning: false,
+    mode: "work",
+  });
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (appStatus.isRunning && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime <= 1) {
+            setAppStatus((prevStatus) => {
+              return {
+                ...prevStatus,
+                isRunning: false,
+              };
+            });
+            clearInterval(interval);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 100);
+    }
+
+    return () => clearInterval(interval);
+  }, [appStatus.isRunning, timeLeft]);
+
   const startHandler = () => {
-    Alert.alert("start");
+    setAppStatus((prevStatus) => {
+      return {
+        ...prevStatus,
+        isRunning: !prevStatus.isRunning,
+      };
+    });
   };
 
   const resetHandler = () => {
-    Alert.alert("reset");
+    setTimeLeft(POMODORO_TIME);
+    setAppStatus((prevStatus) => {
+      return {
+        ...prevStatus,
+        isRunning: false,
+      };
+    });
   };
 
   return (
@@ -21,13 +79,15 @@ export default function App() {
           width={200}
           strokeWidth={BORDER}
           color="#000"
-          progress={0.2}
+          progress={formatProgress(timeLeft, POMODORO_TIME)}
         />
-        <Text style={styles.timer}>25:00</Text>
+        <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
       </View>
       <View style={styles.controlsContainer}>
         <TouchableOpacity style={styles.button} onPress={startHandler}>
-          <Text style={styles.buttonText}>Start</Text>
+          <Text style={styles.buttonText}>
+            {appStatus.isRunning ? "Pause" : "Start"}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={resetHandler}>
           <Text style={styles.buttonText}>Reset</Text>
