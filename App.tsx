@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import CircularProgressBar from "./components/CircularProgressBar";
 import { useState, useEffect } from "react";
+import { formatTime, formatProgress } from "./helpers";
 
 const BORDER = 20;
 const POMODORO_TIME = 1 * 60;
@@ -9,16 +10,6 @@ type appStatus = {
   isRunning: boolean;
   mode: "work" | "break";
 };
-
-function formatTime(seconds: number) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
-}
-
-function formatProgress(currentTime: number, totalTime: number) {
-  return currentTime / totalTime;
-}
 
 export default function App() {
   const [timeLeft, setTimeLeft] = useState(POMODORO_TIME);

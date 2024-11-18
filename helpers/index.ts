@@ -21,3 +21,13 @@ export function calculateArcCoordinates(
     center,
   };
 }
+
+export function formatTime(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+}
+
+export function formatProgress(currentTime: number, totalTime: number) {
+  return currentTime / totalTime;
+}

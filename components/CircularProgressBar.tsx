@@ -1,7 +1,7 @@
 import Svg, { Path } from "react-native-svg";
 import { StyleSheet } from "react-native";
 import type { StyleProp, ViewStyle } from "react-native";
-import { calculateArcCoordinates } from "../helpers/math-functions";
+import { calculateArcCoordinates } from "../helpers/index";
 
 interface CircularProgressBarProps {
   width?: number;
