@@ -28,10 +28,17 @@ const CircularProgressBar = ({
   // Calculate initial coordinates for the arc
   const [cx, cy] = [center, strokeWidth / 2];
 
-  // Createa the arch path
-  const arcPath = `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x} ${y}`;
-  // Set start arc position
-  const path = `M${cx} ${cy} ${arcPath}`;
+  let path: string;
+
+  if (progress >= 1) {
+    const rightArc = `M${cx} ${cy} A ${radius} ${radius} 0 0 1 ${cx} ${width - cy}`;
+    const leftArc = `M${cx} ${cy} A ${radius} ${radius} 0 0 0 ${cx} ${width - cy}`;
+
+    path = `${rightArc} ${leftArc}`;
+  } else {
+    const arcPath = `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x} ${y}`;
+    path = `M${cx} ${cy} ${arcPath}`;
+  }
 
   return (
     <Svg
