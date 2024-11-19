@@ -84,6 +84,18 @@ export default function App() {
           <Text style={styles.buttonText}>Reset</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={styles.modeContainer}>
+        <Text style={styles.mode}>Mode: </Text>
+        <Text
+          style={[
+            styles.mode,
+            appStatus.mode === "work" ? styles.modeWork : styles.modeBreak,
+          ]}
+        >
+          {appStatus.mode}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -139,5 +151,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
+  },
+
+  modeContainer: {
+    flexDirection: "row",
+  },
+  mode: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  modeWork: {
+    color: "#008000",
+  },
+  modeBreak: {
+    color: "#800000",
   },
 });
