@@ -36,13 +36,8 @@ export default function App() {
     }
     // On work mode
     if (appState.mode.name === "work") {
-      // Increment the completed completed work sessions counter
-      setAppState((prevState) => ({
-        ...prevState,
-        workSessionsCompleted: prevState.workSessionsCompleted + 1,
-      }));
       // If completed work sessions < 4, switch to short break
-      if (appState.workSessionsCompleted < 4) {
+      if (appState.sessionsCompleted < 4) {
         setAppState((prevState) => ({
           ...prevState,
           mode: MODES.SHORT_BREAK,
@@ -55,7 +50,7 @@ export default function App() {
           ...prevState,
           mode: MODES.LONG_BREAK,
           timeLeft: MODES.LONG_BREAK.duration,
-          workSessionsCompleted: 0,
+          sessionsCompleted: 0,
         }));
       }
     }
@@ -68,6 +63,11 @@ export default function App() {
         ...prevState,
         mode: MODES.WORK,
         timeLeft: MODES.WORK.duration,
+      }));
+      // Increment the completed completed sessions counter
+      setAppState((prevState) => ({
+        ...prevState,
+        sessionsCompleted: prevState.sessionsCompleted + 1,
       }));
     }
   };
@@ -114,7 +114,7 @@ export default function App() {
           {appState.mode.label}
         </Text>
       </View>
-      <Text>Work sessions completed: {appState.workSessionsCompleted}</Text>
+      <Text>Sessions completed: {appState.sessionsCompleted}</Text>
     </View>
   );
 }

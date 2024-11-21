@@ -19,7 +19,7 @@ export const MODES: { WORK: Mode; SHORT_BREAK: Mode; LONG_BREAK: Mode } = {
 export const DEFAULT_STATE: AppState = {
   isRunning: false,
   autoStart: false,
-  workSessionsCompleted: 0,
+  sessionsCompleted: 0,
   timeLeft: MODES.WORK.duration,
   mode: MODES.WORK,
 };

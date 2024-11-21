@@ -7,7 +7,7 @@ type Mode = {
 type AppState = {
   isRunning: boolean;
   autoStart: boolean;
-  workSessionsCompleted: number;
+  sessionsCompleted: number;
   timeLeft: number;
   mode: Mode;
 };
