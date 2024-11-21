@@ -8,8 +8,8 @@ interface CircularProgressBarProps {
   strokeWidth?: number;
   color?: string;
   style?: StyleProp<ViewStyle>;
-  currentTime: number;
-  totalTime: number;
+  timeLeft: number;
+  duration: number;
 }
 
 const CircularProgressBar = ({
@@ -17,10 +17,10 @@ const CircularProgressBar = ({
   strokeWidth = 20,
   color = "#000",
   style,
-  currentTime,
-  totalTime,
+  timeLeft,
+  duration,
 }: CircularProgressBarProps) => {
-  const progress = calculateProgress(currentTime, totalTime);
+  const progress = calculateProgress(timeLeft, duration);
 
   // Calculate the final coordinates of the arc based on progress
   const { radius, center, x, y, largeArcFlag } = calculateArcCoordinates(

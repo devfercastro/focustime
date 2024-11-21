@@ -6,15 +6,11 @@ const BORDER = 20;
 
 interface TimerProps {
   isRunning: boolean;
-  currentTime: number;
-  totalTime: number;
+  duration: number;
+  timeLeft: number;
 }
 
-export default function Timer({
-  isRunning,
-  currentTime,
-  totalTime,
-}: TimerProps) {
+export default function Timer({ isRunning, duration, timeLeft }: TimerProps) {
   return (
     <View style={styles.timerContainer}>
       <CircularProgressBar
@@ -22,10 +18,10 @@ export default function Timer({
         width={200}
         strokeWidth={BORDER}
         color="#000"
-        totalTime={totalTime}
-        currentTime={currentTime}
+        duration={duration}
+        timeLeft={timeLeft}
       />
-      <Text style={styles.timer}>{formatTime(currentTime)}</Text>
+      <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
     </View>
   );
 }
