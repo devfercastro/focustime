@@ -1,46 +1,7 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import Timer from "./components/Timer";
-
-type Mode = {
-  name: "work" | "shortBreak" | "longBreak";
-  label: string;
-  duration: number;
-};
-
-const MODES: { WORK: Mode; SHORT_BREAK: Mode; LONG_BREAK: Mode } = {
-  WORK: {
-    name: "work",
-    label: "Work",
-    duration: 25,
-  },
-  SHORT_BREAK: {
-    name: "shortBreak",
-    label: "Short Break",
-    duration: 5,
-  },
-  LONG_BREAK: {
-    name: "longBreak",
-    label: "Long Break",
-    duration: 15,
-  },
-};
-
-type AppState = {
-  isRunning: boolean;
-  autoStart: boolean;
-  pomodorosCompleted: number;
-  timeLeft: number;
-  mode: Mode;
-};
-
-const DEFAULT_STATE: AppState = {
-  isRunning: false,
-  autoStart: false,
-  pomodorosCompleted: 0,
-  timeLeft: MODES.WORK.duration,
-  mode: MODES.WORK,
-};
+import { DEFAULT_STATE, MODES } from "./constans";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState>(DEFAULT_STATE);
@@ -65,9 +26,6 @@ export default function App() {
     return () => clearInterval(interval);
   }, [appState.isRunning, appState.timeLeft]);
 
-  /**
-   * Handles the mode transitions
-   */
   const handleModeTransition = () => {
     // If autoStart is disabled, stop the timer
     if (!appState.autoStart) {
@@ -78,26 +36,26 @@ export default function App() {
     }
     // On work mode
     if (appState.mode.name === "work") {
-      // Increment the completed pomodoros counter
+      // Increment the completed completed work sessions counter
       setAppState((prevState) => ({
         ...prevState,
-        pomodorosCompleted: prevState.pomodorosCompleted + 1,
+        workSessionsCompleted: prevState.workSessionsCompleted + 1,
       }));
-      // If pomodorosCompleted < 4, switch to short break
-      if (appState.pomodorosCompleted < 4) {
+      // If completed work sessions < 4, switch to short break
+      if (appState.workSessionsCompleted < 4) {
         setAppState((prevState) => ({
           ...prevState,
           mode: MODES.SHORT_BREAK,
           timeLeft: MODES.SHORT_BREAK.duration,
         }));
       }
-      // If pomodorosCompleted >= 4, switch to long break
+      // If completed work sessions >= 4, switch to long break
       else {
         setAppState((prevState) => ({
           ...prevState,
           mode: MODES.LONG_BREAK,
           timeLeft: MODES.LONG_BREAK.duration,
-          pomodorosCompleted: 0,
+          workSessionsCompleted: 0,
         }));
       }
     }
@@ -128,10 +86,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Pomodoro Tracker</Text>
-      {/* TODO: Refactor Timer component to rename props name */}
       <Timer
-        currentTime={appState.timeLeft}
-        totalTime={appState.mode.duration}
+        timeLeft={appState.timeLeft}
+        duration={appState.mode.duration}
         isRunning={appState.isRunning}
       />
       <View style={styles.controlsContainer}>
@@ -157,7 +114,7 @@ export default function App() {
           {appState.mode.label}
         </Text>
       </View>
-      <Text>Pomodoros completed: {appState.pomodorosCompleted}</Text>
+      <Text>Work sessions completed: {appState.workSessionsCompleted}</Text>
     </View>
   );
 }
