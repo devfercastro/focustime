@@ -1,14 +1,15 @@
 import Svg, { Path } from "react-native-svg";
 import { StyleSheet } from "react-native";
 import type { StyleProp, ViewStyle } from "react-native";
-import { calculateArcCoordinates } from "../helpers/index";
+import { calculateArcCoordinates, calculateProgress } from "../helpers/index";
 
 interface CircularProgressBarProps {
   width?: number;
   strokeWidth?: number;
   color?: string;
   style?: StyleProp<ViewStyle>;
-  progress: number;
+  currentTime: number;
+  totalTime: number;
 }
 
 const CircularProgressBar = ({
@@ -16,8 +17,11 @@ const CircularProgressBar = ({
   strokeWidth = 20,
   color = "#000",
   style,
-  progress,
+  currentTime,
+  totalTime,
 }: CircularProgressBarProps) => {
+  const progress = calculateProgress(currentTime, totalTime);
+
   // Calculate the final coordinates of the arc based on progress
   const { radius, center, x, y, largeArcFlag } = calculateArcCoordinates(
     progress,
