@@ -28,6 +28,6 @@ export function formatTime(seconds: number) {
   return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
 }
 
-export function formatProgress(currentTime: number, totalTime: number) {
+export function calculateProgress(currentTime: number, totalTime: number) {
   return (totalTime - currentTime) / totalTime;
 }
