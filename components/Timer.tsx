@@ -20,6 +20,7 @@ const TimeIndicator = ({
   timeLeft: number;
 }) => {
   const opacity = useRef(new Animated.Value(1)).current;
+  const timeFormated = formatTime(timeLeft);
 
   useEffect(() => {
     // If the timer is not running
@@ -52,8 +53,10 @@ const TimeIndicator = ({
   }, [isRunning, opacity]);
 
   return (
-    <Animated.View style={{ opacity }}>
-      <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
+    <Animated.View style={[styles.timeIndicatorContainer, { opacity }]}>
+      <Text style={styles.timeIndicator}>{timeFormated.minutes}</Text>
+      <Text style={styles.timeIndicatorSeparator}>:</Text>
+      <Text style={styles.timeIndicator}>{timeFormated.seconds}</Text>
     </Animated.View>
   );
 };
@@ -90,9 +93,23 @@ const styles = StyleSheet.create({
     top: -BORDER,
     left: -BORDER,
   },
-  timer: {
+
+  timeIndicatorContainer: {
+    width: 140,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  timeIndicator: {
     fontSize: 48,
     fontWeight: "bold",
+    width: 50,
+    textAlign: "center",
+  },
+  timeIndicatorSeparator: {
+    fontSize: 48,
+    fontWeight: "bold",
+    width: 22,
     textAlign: "center",
   },
 });

@@ -23,9 +23,13 @@ export function calculateArcCoordinates(
 }
 
 export function formatTime(seconds: number) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = Math.floor(seconds % 60);
-  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  const minutes = String(Math.floor(seconds / 60));
+  const remainingSeconds = String(Math.floor(seconds % 60));
+
+  return {
+    minutes: minutes.padStart(2, "0"),
+    seconds: remainingSeconds.padStart(2, "0"),
+  };
 }
 
 export function calculateProgress(timeLeft: number, duration: number) {
