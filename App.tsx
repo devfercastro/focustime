@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
-import Timer from "./components/Timer";
 import { DEFAULT_STATE, MODES } from "./constans";
+
+import Timer from "./components/Timer";
+import SessionInfo from "./components/SessionInfo";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState>(DEFAULT_STATE);
@@ -101,20 +103,10 @@ export default function App() {
           <Text style={styles.buttonText}>Reset</Text>
         </TouchableOpacity>
       </View>
-
-      {/* TODO: Refactor, move to a dedicated components. Eg. Metrics.tsx */}
-      <View style={styles.modeContainer}>
-        <Text style={styles.mode}>Mode: </Text>
-        <Text
-          style={[
-            styles.mode,
-            appState.mode.name === "work" ? styles.modeWork : styles.modeBreak,
-          ]}
-        >
-          {appState.mode.label}
-        </Text>
-      </View>
-      <Text>Sessions completed: {appState.sessionsCompleted}</Text>
+      <SessionInfo
+        currentMode={appState.mode}
+        sessionsCompleted={appState.sessionsCompleted}
+      />
     </View>
   );
 }
@@ -149,19 +141,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
-  },
-
-  modeContainer: {
-    flexDirection: "row",
-  },
-  mode: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  modeWork: {
-    color: "#008000",
-  },
-  modeBreak: {
-    color: "#800000",
   },
 });
