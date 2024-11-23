@@ -1,11 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
-  View,
   Animated,
   Dimensions,
-  TouchableOpacityProps,
   TouchableOpacity,
 } from "react-native";
 
@@ -20,10 +18,18 @@ const [screenHeight, screenWidth] = [
 ];
 
 export default function Settings({ isVisible, setIsVisible }: SettingsProps) {
+  const translateX = useRef(new Animated.Value(-screenWidth)).current;
+
+  useEffect(() => {
+    Animated.timing(translateX, {
+      toValue: isVisible ? 0 : -screenWidth,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [isVisible, translateX]);
+
   return (
-    <Animated.View
-      style={[styles.container, { left: isVisible ? 0 : -screenWidth }]}
-    >
+    <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
       <Text>Settings is {isVisible}</Text>
       <TouchableOpacity onPress={setIsVisible} style={styles.closeBtn}>
         <Text>Hidde settings</Text>
@@ -40,6 +46,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 10,
     padding: 40 + 20,
+    left: 0,
   },
 
   closeBtn: {
