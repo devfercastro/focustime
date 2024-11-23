@@ -4,9 +4,11 @@ import { DEFAULT_STATE, MODES } from "./constans";
 
 import Timer from "./components/Timer";
 import SessionInfo from "./components/SessionInfo";
+import Settings from "./components/Settings";
 
 export default function App() {
   const [appState, setAppState] = useState<AppState>(DEFAULT_STATE);
+  const [isSettingsVisible, setIsSettingsVisible] = useState<boolean>(true);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -85,8 +87,16 @@ export default function App() {
     setAppState((prevState) => DEFAULT_STATE);
   };
 
+  const handleSettingsVisibility = () => {
+    setIsSettingsVisible(!isSettingsVisible);
+  };
+
   return (
     <View style={styles.container}>
+      <Settings
+        isVisible={isSettingsVisible}
+        setIsVisible={handleSettingsVisibility}
+      />
       <Text style={styles.title}>Pomodoro Tracker</Text>
       <Timer
         timeLeft={appState.timeLeft}
@@ -107,6 +117,12 @@ export default function App() {
         currentMode={appState.mode}
         sessionsCompleted={appState.sessionsCompleted}
       />
+      <TouchableOpacity
+        style={[styles.button, { position: "absolute", bottom: 20, left: 20 }]}
+        onPress={handleSettingsVisibility}
+      >
+        <Text style={styles.buttonText}>Show Settings</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -118,6 +134,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     rowGap: 20,
+    position: "relative",
   },
 
   title: {
