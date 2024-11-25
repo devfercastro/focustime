@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { NumberInput, SwitchInput } from "./Inputs";
 
 interface SettingsProps {
   isVisible: boolean;
@@ -19,6 +20,20 @@ const [screenHeight, screenWidth] = [
 
 export default function Settings({ isVisible, setIsVisible }: SettingsProps) {
   const translateX = useRef(new Animated.Value(-screenWidth)).current;
+  const [autoStart, setAutoStart] = useState<boolean>(true);
+  const [minutes, setMinutes] = useState<number>(10);
+
+  const changeMinutes = (value: number) => {
+    setMinutes(value);
+  };
+
+  const increment = () => {
+    setMinutes((prevState) => prevState + 1);
+  };
+
+  const decrement = () => {
+    setMinutes((prevState) => prevState - 1);
+  };
 
   useEffect(() => {
     Animated.timing(translateX, {
@@ -30,7 +45,35 @@ export default function Settings({ isVisible, setIsVisible }: SettingsProps) {
 
   return (
     <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
-      <Text>Settings is {isVisible}</Text>
+      <NumberInput
+        label="Work duration:"
+        value={minutes}
+        increment={increment}
+        decrement={decrement}
+      />
+      <NumberInput
+        label="Short break duration:"
+        value={minutes}
+        increment={increment}
+        decrement={decrement}
+      />
+      <NumberInput
+        label="Long break duration:"
+        value={minutes}
+        increment={increment}
+        decrement={decrement}
+      />
+      <NumberInput
+        label="Pomodoros until long break:"
+        value={minutes}
+        increment={increment}
+        decrement={decrement}
+      />
+      <SwitchInput
+        label="Autostart:"
+        isChecked={autoStart}
+        onChange={() => setAutoStart(!autoStart)}
+      />
       <TouchableOpacity onPress={setIsVisible} style={styles.closeBtn}>
         <Text>Hidde settings</Text>
       </TouchableOpacity>
