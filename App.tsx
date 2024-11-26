@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
-import { DEFAULT_STATE, MODES } from "./constans";
+import { DEFAULT_PREFERENCES, DEFAULT_STATE, MODES } from "./constans";
 
 import Timer from "./components/Timer";
 import SessionInfo from "./components/SessionInfo";
 import Settings from "./components/Settings";
 
 export default function App() {
+  const [appPreferences, setAppPreferences] =
+    useState<AppPreferences>(DEFAULT_PREFERENCES);
   const [appState, setAppState] = useState<AppState>(DEFAULT_STATE);
   const [isSettingsVisible, setIsSettingsVisible] = useState<boolean>(true);
 
@@ -91,11 +93,30 @@ export default function App() {
     setIsSettingsVisible(!isSettingsVisible);
   };
 
+  const handlePreferencesChange = (
+    preference: keyof AppPreferences,
+    value: 1 | -1,
+  ) => {
+    if (preference === "autoStart") {
+      setAppPreferences((prevState) => ({
+        ...prevState,
+        autoStart: !prevState.autoStart,
+      }));
+    } else {
+      setAppPreferences((prevState) => ({
+        ...prevState,
+        [preference]: prevState[preference] + value,
+      }));
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Settings
         isVisible={isSettingsVisible}
         setIsVisible={handleSettingsVisibility}
+        preferences={appPreferences}
+        handlePreferencesChange={handlePreferencesChange}
       />
       <Text style={styles.title}>Pomodoro Tracker</Text>
       <Timer

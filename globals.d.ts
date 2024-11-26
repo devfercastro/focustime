@@ -11,3 +11,11 @@ type AppState = {
   timeLeft: number;
   mode: Mode;
 };
+
+type AppPreferences = {
+  autoStart: boolean;
+  workDuration: number;
+  shortBreakDuration: number;
+  longBreakDuration: number;
+  pomodorosUntilLongBreak: number;
+};

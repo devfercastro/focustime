@@ -11,6 +11,11 @@ import { NumberInput, SwitchInput } from "./Inputs";
 interface SettingsProps {
   isVisible: boolean;
   setIsVisible: () => void;
+  preferences: AppPreferences;
+  handlePreferencesChange: (
+    preference: keyof AppPreferences,
+    value: 1 | -1,
+  ) => void;
 }
 
 const [screenHeight, screenWidth] = [
@@ -18,7 +23,7 @@ const [screenHeight, screenWidth] = [
   Dimensions.get("window").width,
 ];
 
-type TimerPreferences = {
+type preferences = {
   workDuration: number;
   shortBreakDuration: number;
   longBreakDuration: number;
@@ -26,50 +31,13 @@ type TimerPreferences = {
   autoStart: boolean;
 };
 
-export default function Settings({ isVisible, setIsVisible }: SettingsProps) {
-  console.log(Dimensions.get("window"));
+export default function Settings({
+  isVisible,
+  setIsVisible,
+  preferences,
+  handlePreferencesChange,
+}: SettingsProps) {
   const translateX = useRef(new Animated.Value(-screenWidth)).current;
-  const [timerPreferences, setTimerPreferences] = useState<TimerPreferences>({
-    workDuration: 10,
-    shortBreakDuration: 5,
-    longBreakDuration: 15,
-    pomodorosUntilLongBreak: 5,
-    autoStart: true,
-  });
-
-  const handleNumberInput = (
-    type: "work" | "short" | "long" | "count",
-    value: 1 | -1,
-  ) => {
-    switch (type) {
-      case "work":
-        setTimerPreferences((prevState) => ({
-          ...prevState,
-          workDuration: prevState.workDuration + value,
-        }));
-        break;
-      case "short":
-        setTimerPreferences((prevState) => ({
-          ...prevState,
-          shortBreakDuration: prevState.shortBreakDuration + value,
-        }));
-        break;
-      case "long":
-        setTimerPreferences((prevState) => ({
-          ...prevState,
-          longBreakDuration: prevState.longBreakDuration + value,
-        }));
-        break;
-      case "count":
-        setTimerPreferences((prevState) => ({
-          ...prevState,
-          pomodorosUntilLongBreak: prevState.pomodorosUntilLongBreak + value,
-        }));
-        break;
-      default:
-        break;
-    }
-  };
 
   useEffect(() => {
     Animated.timing(translateX, {
@@ -83,37 +51,32 @@ export default function Settings({ isVisible, setIsVisible }: SettingsProps) {
     <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
       <NumberInput
         label="Work"
-        value={timerPreferences.workDuration}
-        increment={() => handleNumberInput("work", 1)}
-        decrement={() => handleNumberInput("work", -1)}
+        value={preferences.workDuration}
+        increment={() => handlePreferencesChange("workDuration", 1)}
+        decrement={() => handlePreferencesChange("workDuration", -1)}
       />
       <NumberInput
         label="Short break"
-        value={timerPreferences.shortBreakDuration}
-        increment={() => handleNumberInput("short", 1)}
-        decrement={() => handleNumberInput("short", -1)}
+        value={preferences.shortBreakDuration}
+        increment={() => handlePreferencesChange("shortBreakDuration", 1)}
+        decrement={() => handlePreferencesChange("shortBreakDuration", -1)}
       />
       <NumberInput
         label="Long break"
-        value={timerPreferences.longBreakDuration}
-        increment={() => handleNumberInput("long", 1)}
-        decrement={() => handleNumberInput("long", -1)}
+        value={preferences.longBreakDuration}
+        increment={() => handlePreferencesChange("longBreakDuration", 1)}
+        decrement={() => handlePreferencesChange("longBreakDuration", -1)}
       />
       <NumberInput
         label="Pomodoros until long break:"
-        value={timerPreferences.pomodorosUntilLongBreak}
-        increment={() => handleNumberInput("count", 1)}
-        decrement={() => handleNumberInput("count", -1)}
+        value={preferences.pomodorosUntilLongBreak}
+        increment={() => handlePreferencesChange("pomodorosUntilLongBreak", 1)}
+        decrement={() => handlePreferencesChange("pomodorosUntilLongBreak", -1)}
       />
       <SwitchInput
         label="Autostart:"
-        isChecked={timerPreferences.autoStart}
-        onChange={() =>
-          setTimerPreferences((prevState) => ({
-            ...prevState,
-            autoStart: !prevState.autoStart,
-          }))
-        }
+        isChecked={preferences.autoStart}
+        onChange={() => handlePreferencesChange("autoStart", 1)}
       />
       <TouchableOpacity onPress={setIsVisible} style={styles.closeBtn}>
         <Text>Hidde settings</Text>
@@ -130,7 +93,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 10,
     padding: 20,
+    paddingTop: 50,
     left: 0,
+    rowGap: 20,
   },
 
   closeBtn: {

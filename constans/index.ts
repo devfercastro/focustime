@@ -23,3 +23,11 @@ export const DEFAULT_STATE: AppState = {
   timeLeft: MODES.WORK.duration,
   mode: MODES.WORK,
 };
+
+export const DEFAULT_PREFERENCES: AppPreferences = {
+  autoStart: true,
+  workDuration: MODES.WORK.duration,
+  shortBreakDuration: MODES.SHORT_BREAK.duration,
+  longBreakDuration: MODES.LONG_BREAK.duration,
+  pomodorosUntilLongBreak: 4,
+};
