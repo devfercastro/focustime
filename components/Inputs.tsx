@@ -34,12 +34,21 @@ export const NumberInput = ({
 }: NumberInputProps) => {
   return (
     <View style={styles.numberInputContainer}>
-      <Text>{label}</Text>
+      <Text style={styles.inputLabel}>{label}</Text>
       <View style={styles.numberInputBtnsContainer}>
         <TouchableOpacity style={styles.numberInputBtn} onPress={decrement}>
           <Text style={{ color: "#fff", textAlign: "center" }}>-</Text>
         </TouchableOpacity>
-        <Text>{value}</Text>
+        <Text
+          style={{
+            fontSize: 24,
+            textAlign: "center",
+            width: 50,
+            fontWeight: "bold",
+          }}
+        >
+          {value}
+        </Text>
         <TouchableOpacity style={styles.numberInputBtn} onPress={increment}>
           <Text style={{ color: "#fff", textAlign: "center" }}>+</Text>
         </TouchableOpacity>
@@ -49,11 +58,15 @@ export const NumberInput = ({
 };
 
 const styles = StyleSheet.create({
+  inputLabel: {
+    fontSize: 20,
+    fontWeight: "600",
+  },
+
   switchContainer: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    backgroundColor: "#fff",
   },
   switchLabel: {
     fontSize: 16,
@@ -61,19 +74,24 @@ const styles = StyleSheet.create({
   },
 
   numberInputContainer: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
+    flexDirection: "column",
+    alignItems: "center",
     gap: 10,
   },
   numberInputBtnsContainer: {
     flexDirection: "row",
     width: 100,
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
   },
   numberInputBtn: {
     fontSize: 16,
-    borderRadius: 100,
-    width: 30,
+    borderRadius: 125,
+    width: 40,
+    height: 40,
     backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

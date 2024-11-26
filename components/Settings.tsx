@@ -27,6 +27,7 @@ type TimerPreferences = {
 };
 
 export default function Settings({ isVisible, setIsVisible }: SettingsProps) {
+  console.log(Dimensions.get("window"));
   const translateX = useRef(new Animated.Value(-screenWidth)).current;
   const [timerPreferences, setTimerPreferences] = useState<TimerPreferences>({
     workDuration: 10,
@@ -81,19 +82,19 @@ export default function Settings({ isVisible, setIsVisible }: SettingsProps) {
   return (
     <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
       <NumberInput
-        label="Work duration:"
+        label="Work"
         value={timerPreferences.workDuration}
         increment={() => handleNumberInput("work", 1)}
         decrement={() => handleNumberInput("work", -1)}
       />
       <NumberInput
-        label="Short break duration:"
+        label="Short break"
         value={timerPreferences.shortBreakDuration}
         increment={() => handleNumberInput("short", 1)}
         decrement={() => handleNumberInput("short", -1)}
       />
       <NumberInput
-        label="Long break duration:"
+        label="Long break"
         value={timerPreferences.longBreakDuration}
         increment={() => handleNumberInput("long", 1)}
         decrement={() => handleNumberInput("long", -1)}
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
     position: "absolute",
     zIndex: 10,
-    padding: 40 + 20,
+    padding: 20,
     left: 0,
   },
 
