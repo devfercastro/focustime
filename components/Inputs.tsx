@@ -20,7 +20,7 @@ export const SwitchInput = ({
 }: SwitchInputProps) => {
   return (
     <View style={styles.switchContainer}>
-      <Text style={styles.switchLabel}>{label}</Text>
+      <Text style={styles.inputLabel}>{label}</Text>
       <Switch value={isChecked} onValueChange={onChange} />
     </View>
   );
@@ -37,20 +37,11 @@ export const NumberInput = ({
       <Text style={styles.inputLabel}>{label}</Text>
       <View style={styles.numberInputBtnsContainer}>
         <TouchableOpacity style={styles.numberInputBtn} onPress={decrement}>
-          <Text style={{ color: "#fff", textAlign: "center" }}>-</Text>
+          <Text style={styles.numberInputBtnSymbols}>-</Text>
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: 24,
-            textAlign: "center",
-            width: 50,
-            fontWeight: "bold",
-          }}
-        >
-          {value}
-        </Text>
+        <Text style={styles.numberInputBtnValue}>{value}</Text>
         <TouchableOpacity style={styles.numberInputBtn} onPress={increment}>
-          <Text style={{ color: "#fff", textAlign: "center" }}>+</Text>
+          <Text style={styles.numberInputBtnSymbols}>+</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -76,7 +67,6 @@ const styles = StyleSheet.create({
   numberInputContainer: {
     flexDirection: "column",
     alignItems: "center",
-    gap: 10,
   },
   numberInputBtnsContainer: {
     flexDirection: "row",
@@ -93,5 +83,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
+  },
+  numberInputBtnValue: {
+    fontSize: 24,
+    textAlign: "center",
+    width: 50,
+    fontWeight: "bold",
+  },
+  numberInputBtnSymbols: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
