@@ -19,6 +19,17 @@ export default function useTimer({
   const [timerState, setTimerState] = useState<TimerState>(DEFAULT_TIMER_STATE);
 
   useEffect(() => {
+    // If the preferences of a mode is change and the timer is not running, reflect that change
+    if (!timerState.isRunning)
+      setTimerState((prevState) => ({
+        ...prevState,
+        timeLeft:
+          modes[prevState.mode.name.toUpperCase() as keyof Modes].duration,
+        mode: modes[prevState.mode.name.toUpperCase() as keyof Modes],
+      }));
+  }, [timerState.isRunning, modes]);
+
+  useEffect(() => {
     let interval: NodeJS.Timeout;
 
     if (timerState.isRunning && timerState.timeLeft > 0) {

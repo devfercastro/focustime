@@ -11,11 +11,8 @@ import { NumberInput, SwitchInput } from "./Inputs";
 interface SettingsProps {
   isVisible: boolean;
   setIsVisible: () => void;
-  preferences: AppPreferences;
-  handlePreferencesChange: (
-    preference: keyof AppPreferences,
-    value: 1 | -1,
-  ) => void;
+  preferences: Preferences;
+  setPreferences: (preferences: Preferences) => void;
 }
 
 const [screenHeight, screenWidth] = [
@@ -23,19 +20,11 @@ const [screenHeight, screenWidth] = [
   Dimensions.get("window").width,
 ];
 
-type preferences = {
-  workDuration: number;
-  shortBreakDuration: number;
-  longBreakDuration: number;
-  pomodorosUntilLongBreak: number;
-  autoStart: boolean;
-};
-
 export default function Settings({
   isVisible,
   setIsVisible,
   preferences,
-  handlePreferencesChange,
+  setPreferences,
 }: SettingsProps) {
   const translateX = useRef(new Animated.Value(-screenWidth)).current;
 
@@ -47,36 +36,67 @@ export default function Settings({
     }).start();
   }, [isVisible, translateX]);
 
+  const handleModePreferencesChange = (
+    modName: keyof Modes,
+    number: 1 | -1,
+  ) => {
+    setPreferences({
+      ...preferences,
+      modes: {
+        ...preferences.modes,
+        [modName]: {
+          ...preferences.modes[modName],
+          duration: preferences.modes[modName].duration + number,
+        },
+      },
+    });
+  };
+
   return (
     <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
       <NumberInput
         label="Work"
-        value={preferences.workDuration}
-        increment={() => handlePreferencesChange("workDuration", 1)}
-        decrement={() => handlePreferencesChange("workDuration", -1)}
+        value={preferences.modes.WORK.duration}
+        increment={() => handleModePreferencesChange("WORK", 1)}
+        decrement={() => handleModePreferencesChange("WORK", -1)}
       />
       <NumberInput
         label="Short break"
-        value={preferences.shortBreakDuration}
-        increment={() => handlePreferencesChange("shortBreakDuration", 1)}
-        decrement={() => handlePreferencesChange("shortBreakDuration", -1)}
+        value={preferences.modes.SHORT_BREAK.duration}
+        increment={() => handleModePreferencesChange("SHORT_BREAK", 1)}
+        decrement={() => handleModePreferencesChange("SHORT_BREAK", -1)}
       />
       <NumberInput
         label="Long break"
-        value={preferences.longBreakDuration}
-        increment={() => handlePreferencesChange("longBreakDuration", 1)}
-        decrement={() => handlePreferencesChange("longBreakDuration", -1)}
+        value={preferences.modes.LONG_BREAK.duration}
+        increment={() => handleModePreferencesChange("LONG_BREAK", 1)}
+        decrement={() => handleModePreferencesChange("LONG_BREAK", -1)}
       />
       <NumberInput
         label="Pomodoros until long break:"
         value={preferences.pomodorosUntilLongBreak}
-        increment={() => handlePreferencesChange("pomodorosUntilLongBreak", 1)}
-        decrement={() => handlePreferencesChange("pomodorosUntilLongBreak", -1)}
+        increment={() =>
+          setPreferences({
+            ...preferences,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 1,
+          })
+        }
+        decrement={() =>
+          setPreferences({
+            ...preferences,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 1,
+          })
+        }
       />
       <SwitchInput
-        label="Autostart:"
-        isChecked={preferences.autoStart}
-        onChange={() => handlePreferencesChange("autoStart", 1)}
+        label="Autostart next mode:"
+        isChecked={preferences.autoStartNextMode}
+        onChange={() =>
+          setPreferences({
+            ...preferences,
+            autoStartNextMode: !preferences.autoStartNextMode,
+          })
+        }
       />
       <TouchableOpacity onPress={setIsVisible} style={styles.closeBtn}>
         <Text>Hidde settings</Text>

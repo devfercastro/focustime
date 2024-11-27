@@ -4,16 +4,15 @@ import { DEFAULT_PREFERENCES } from "./constans";
 
 import Timer from "./components/Timer";
 import SessionInfo from "./components/SessionInfo";
-// import Settings from "./components/Settings";
+import Settings from "./components/Settings";
 
 import useTimer from "./hooks/useTimer";
 
 export default function App() {
   const [preferences, setPreferences] =
     useState<Preferences>(DEFAULT_PREFERENCES);
-  const [isSettingsVisible, setIsSettingsVisible] = useState<boolean>(true);
-  const { timerState, setTimerState, handleStartPause, handleReset } =
-    useTimer(preferences);
+  const [isSettingsVisible, setIsSettingsVisible] = useState<boolean>(false);
+  const { timerState, handleStartPause, handleReset } = useTimer(preferences);
 
   const handleSettingsVisibility = () => {
     setIsSettingsVisible(!isSettingsVisible);
@@ -21,13 +20,12 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* TODO: Refactor Settings component */}
-      {/* <Settings
+      <Settings
         isVisible={isSettingsVisible}
         setIsVisible={handleSettingsVisibility}
         preferences={preferences}
-        handlePreferencesChange={handlePreferencesChange}
-      /> */}
+        setPreferences={setPreferences}
+      />
       <Text style={styles.title}>Pomodoro Tracker</Text>
       <Timer
         timeLeft={timerState.timeLeft}
