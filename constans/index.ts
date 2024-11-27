@@ -1,4 +1,4 @@
-export const MODES: { WORK: Mode; SHORT_BREAK: Mode; LONG_BREAK: Mode } = {
+export const MODES: Modes = {
   WORK: {
     name: "work",
     label: "Work",
@@ -16,18 +16,8 @@ export const MODES: { WORK: Mode; SHORT_BREAK: Mode; LONG_BREAK: Mode } = {
   },
 };
 
-export const DEFAULT_STATE: AppState = {
-  isRunning: false,
-  autoStart: false,
-  sessionsCompleted: 0,
-  timeLeft: MODES.WORK.duration,
-  mode: MODES.WORK,
-};
-
-export const DEFAULT_PREFERENCES: AppPreferences = {
-  autoStart: true,
-  workDuration: MODES.WORK.duration,
-  shortBreakDuration: MODES.SHORT_BREAK.duration,
-  longBreakDuration: MODES.LONG_BREAK.duration,
+export const DEFAULT_PREFERENCES: Preferences = {
+  autoStartNextMode: true,
+  modes: MODES,
   pomodorosUntilLongBreak: 4,
 };

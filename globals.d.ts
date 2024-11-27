@@ -4,18 +4,21 @@ type Mode = {
   duration: number;
 };
 
-type AppState = {
-  isRunning: boolean;
-  autoStart: boolean;
-  sessionsCompleted: number;
-  timeLeft: number;
-  mode: Mode;
+type Modes = {
+  WORK: Mode;
+  SHORT_BREAK: Mode;
+  LONG_BREAK: Mode;
 };
 
-type AppPreferences = {
-  autoStart: boolean;
-  workDuration: number;
-  shortBreakDuration: number;
-  longBreakDuration: number;
+interface Preferences {
+  modes: Modes;
+  autoStartNextMode: boolean;
   pomodorosUntilLongBreak: number;
-};
+}
+
+interface TimerState {
+  isRunning: boolean;
+  timeLeft: number;
+  mode: Mode;
+  pomodorosCount: number;
+}
