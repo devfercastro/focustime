@@ -38,7 +38,7 @@ export default function Settings({
 
   const handleModePreferencesChange = (
     modName: keyof Modes,
-    number: 1 | -1,
+    number: number,
   ) => {
     setPreferences({
       ...preferences,
@@ -57,34 +57,35 @@ export default function Settings({
       <NumberInput
         label="Work"
         value={preferences.modes.WORK.duration}
-        increment={() => handleModePreferencesChange("WORK", 1)}
-        decrement={() => handleModePreferencesChange("WORK", -1)}
+        increment={() => handleModePreferencesChange("WORK", 60)}
+        decrement={() => handleModePreferencesChange("WORK", -60)}
       />
       <NumberInput
         label="Short break"
         value={preferences.modes.SHORT_BREAK.duration}
-        increment={() => handleModePreferencesChange("SHORT_BREAK", 1)}
-        decrement={() => handleModePreferencesChange("SHORT_BREAK", -1)}
+        increment={() => handleModePreferencesChange("SHORT_BREAK", 60)}
+        decrement={() => handleModePreferencesChange("SHORT_BREAK", -60)}
       />
       <NumberInput
         label="Long break"
         value={preferences.modes.LONG_BREAK.duration}
-        increment={() => handleModePreferencesChange("LONG_BREAK", 1)}
-        decrement={() => handleModePreferencesChange("LONG_BREAK", -1)}
+        increment={() => handleModePreferencesChange("LONG_BREAK", 60)}
+        decrement={() => handleModePreferencesChange("LONG_BREAK", -60)}
       />
       <NumberInput
         label="Pomodoros until long break:"
         value={preferences.pomodorosUntilLongBreak}
+        formatToMinutes={false}
         increment={() =>
           setPreferences({
             ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 1,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 60,
           })
         }
         decrement={() =>
           setPreferences({
             ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 1,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 60,
           })
         }
       />
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     height: screenHeight + 40,
     backgroundColor: "#f2f2f2",
     position: "absolute",
-    zIndex: 10,
+    zIndex: 600,
     padding: 20,
     paddingTop: 50,
     left: 0,
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     left: 20,
-    borderRadius: 10,
+    borderRadius: 600,
     backgroundColor: "red",
     padding: 20,
   },

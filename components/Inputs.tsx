@@ -1,4 +1,5 @@
 import { Switch, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { formatTime } from "../helpers";
 
 interface SwitchInputProps {
   label: string;
@@ -11,6 +12,7 @@ interface NumberInputProps {
   value: number;
   increment: () => void;
   decrement: () => void;
+  formatToMinutes?: boolean;
 }
 
 export const SwitchInput = ({
@@ -31,7 +33,10 @@ export const NumberInput = ({
   value,
   increment,
   decrement,
+  formatToMinutes = true,
 }: NumberInputProps) => {
+  const formatedValue = formatTime(value).minutes;
+
   return (
     <View style={styles.numberInputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
@@ -39,7 +44,9 @@ export const NumberInput = ({
         <TouchableOpacity style={styles.numberInputBtn} onPress={decrement}>
           <Text style={styles.numberInputBtnSymbols}>-</Text>
         </TouchableOpacity>
-        <Text style={styles.numberInputBtnValue}>{value}</Text>
+        <Text style={styles.numberInputBtnValue}>
+          {formatToMinutes ? formatedValue : String(value).padStart(2, "0")}
+        </Text>
         <TouchableOpacity style={styles.numberInputBtn} onPress={increment}>
           <Text style={styles.numberInputBtnSymbols}>+</Text>
         </TouchableOpacity>

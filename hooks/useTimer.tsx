@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const TIMER_DELAY = 100; // TODO: Change this to 1000 on production
+const TIMER_DELAY = 1000;
 
 interface UseTimerParams extends Preferences {}
 
