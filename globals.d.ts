@@ -21,4 +21,5 @@ interface TimerState {
   timeLeft: number;
   mode: Mode;
   pomodorosCount: number;
+  pomodorosUntilLongBreak: number;
 }

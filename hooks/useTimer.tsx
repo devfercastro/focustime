@@ -14,20 +14,24 @@ export default function useTimer({
     timeLeft: modes.WORK.duration,
     mode: modes.WORK,
     pomodorosCount: 0,
+    pomodorosUntilLongBreak,
   };
 
   const [timerState, setTimerState] = useState<TimerState>(DEFAULT_TIMER_STATE);
 
   useEffect(() => {
-    // If the preferences of a mode is change and the timer is not running, reflect that change
+    // If the preferences are changed and the timer is not running, reflect that change
     if (!timerState.isRunning)
       setTimerState((prevState) => ({
         ...prevState,
+        // Update the timeLeft
         timeLeft:
           modes[prevState.mode.name.toUpperCase() as keyof Modes].duration,
         mode: modes[prevState.mode.name.toUpperCase() as keyof Modes],
+        // Update pomodoros until long break
+        pomodorosUntilLongBreak,
       }));
-  }, [timerState.isRunning, modes]);
+  }, [timerState.isRunning, modes, pomodorosUntilLongBreak]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -55,7 +59,7 @@ export default function useTimer({
     }
 
     if (timerState.mode.name === "work") {
-      if (timerState.pomodorosCount < pomodorosUntilLongBreak) {
+      if (timerState.pomodorosUntilLongBreak > 0) {
         setTimerState((prevState) => ({
           ...prevState,
           mode: modes.SHORT_BREAK,
@@ -66,7 +70,7 @@ export default function useTimer({
           ...prevState,
           mode: modes.LONG_BREAK,
           timeLeft: modes.LONG_BREAK.duration,
-          pomodorosCount: 0,
+          pomodorosUntilLongBreak,
         }));
       }
     } else {
@@ -75,6 +79,7 @@ export default function useTimer({
         mode: modes.WORK,
         timeLeft: modes.WORK.duration,
         pomodorosCount: prevState.pomodorosCount + 1,
+        pomodorosUntilLongBreak: prevState.pomodorosUntilLongBreak - 1,
       }));
     }
   };

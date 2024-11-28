@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { DEFAULT_PREFERENCES } from "./constans";
 
 import Timer from "./components/Timer";
@@ -44,7 +44,8 @@ export default function App() {
       </View>
       <SessionInfo
         currentMode={timerState.mode}
-        sessionsCompleted={timerState.pomodorosCount}
+        pomodorosCount={timerState.pomodorosCount}
+        pomodorosUntilLongBreak={timerState.pomodorosUntilLongBreak}
       />
       <TouchableOpacity
         style={[styles.button, { position: "absolute", bottom: 20, left: 20 }]}

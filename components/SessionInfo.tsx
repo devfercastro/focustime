@@ -2,12 +2,14 @@ import { StyleSheet, Text, View } from "react-native";
 
 interface SessionInfoProps {
   currentMode: Mode;
-  sessionsCompleted: number;
+  pomodorosCount: number;
+  pomodorosUntilLongBreak: number;
 }
 
 export default function SessionInfo({
   currentMode,
-  sessionsCompleted,
+  pomodorosCount,
+  pomodorosUntilLongBreak,
 }: SessionInfoProps) {
   return (
     <View style={styles.sessionInfoContainer}>
@@ -22,7 +24,12 @@ export default function SessionInfo({
           {currentMode.label}
         </Text>
       </View>
-      <Text>Sessions completed: {sessionsCompleted}</Text>
+      <Text style={styles.pomodorosInfo}>
+        Pomodoros completed: {pomodorosCount}
+      </Text>
+      <Text style={styles.pomodorosInfo}>
+        Pomodoros until long break: {pomodorosUntilLongBreak}
+      </Text>
     </View>
   );
 }
@@ -45,5 +52,10 @@ const styles = StyleSheet.create({
   },
   modeBreak: {
     color: "#800000",
+  },
+
+  pomodorosInfo: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
