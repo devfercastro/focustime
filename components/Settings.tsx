@@ -79,13 +79,13 @@ export default function Settings({
         increment={() =>
           setPreferences({
             ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 60,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 1,
           })
         }
         decrement={() =>
           setPreferences({
             ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 60,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 1,
           })
         }
       />
