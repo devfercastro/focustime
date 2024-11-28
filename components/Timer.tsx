@@ -3,8 +3,9 @@ import CircularProgressBar from "./CircularProgressBar";
 import { formatTime } from "../helpers";
 import { useEffect, useRef } from "react";
 
-const BORDER = 20;
+const BORDER = 10;
 const BLINK_DURATION = 1200;
+const WIDTH = 300;
 
 interface TimerProps {
   isRunning: boolean;
@@ -63,10 +64,10 @@ const TimeIndicator = ({
 
 export default function Timer({ isRunning, duration, timeLeft }: TimerProps) {
   return (
-    <View style={styles.timerContainer}>
+    <View style={styles.timer}>
       <CircularProgressBar
         style={styles.progressBar}
-        width={200}
+        width={WIDTH}
         strokeWidth={BORDER}
         color="#000"
         duration={duration}
@@ -78,10 +79,10 @@ export default function Timer({ isRunning, duration, timeLeft }: TimerProps) {
 }
 
 const styles = StyleSheet.create({
-  timerContainer: {
-    width: 200,
-    height: 200,
-    borderRadius: 125,
+  timer: {
+    width: WIDTH,
+    height: WIDTH,
+    borderRadius: WIDTH,
     borderWidth: BORDER,
     borderColor: "#e0e0e0",
     alignItems: "center",
