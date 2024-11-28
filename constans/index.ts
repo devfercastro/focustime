@@ -1,17 +1,17 @@
 export const MODES: Modes = {
   WORK: {
     name: "work",
-    label: "Work",
+    label: "WORK",
     duration: 25 * 60,
   },
   SHORT_BREAK: {
     name: "shortBreak",
-    label: "Short Break",
+    label: "SHORT BREAK",
     duration: 5 * 60,
   },
   LONG_BREAK: {
     name: "longBreak",
-    label: "Long Break",
+    label: "LONG BREAK",
     duration: 15 * 60,
   },
 };
