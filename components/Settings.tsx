@@ -40,6 +40,7 @@ export default function Settings({
     modName: keyof Modes,
     number: number,
   ) => {
+    // TODO: check if number is valid
     setPreferences({
       ...preferences,
       modes: {

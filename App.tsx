@@ -3,8 +3,8 @@ import { useState } from "react";
 import { DEFAULT_PREFERENCES } from "./constans";
 
 import Timer from "./components/Timer";
-import SessionInfo from "./components/SessionInfo";
 import Settings from "./components/Settings";
+import Controls from "./components/Controls";
 
 import useTimer from "./hooks/useTimer";
 
@@ -26,26 +26,15 @@ export default function App() {
         preferences={preferences}
         setPreferences={setPreferences}
       />
-      <Text style={styles.title}>Pomodoro Tracker</Text>
       <Timer
         timeLeft={timerState.timeLeft}
         duration={timerState.mode.duration}
         isRunning={timerState.isRunning}
       />
-      <View style={styles.controlsContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleStartPause}>
-          <Text style={styles.buttonText}>
-            {timerState.isRunning ? "Pause" : "Start"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleReset}>
-          <Text style={styles.buttonText}>Reset</Text>
-        </TouchableOpacity>
-      </View>
-      <SessionInfo
-        currentMode={timerState.mode}
-        pomodorosCount={timerState.pomodorosCount}
-        pomodorosUntilLongBreak={timerState.pomodorosUntilLongBreak}
+      <Controls
+        timerStatus={timerState.isRunning}
+        handleStartPause={handleStartPause}
+        handleReset={handleReset}
       />
       <TouchableOpacity
         style={[styles.button, { position: "absolute", bottom: 20, left: 20 }]}
@@ -63,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    rowGap: 20,
+    rowGap: 50,
     position: "relative",
   },
 
