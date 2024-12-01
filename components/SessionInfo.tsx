@@ -6,45 +6,64 @@ interface SessionInfoProps {
   pomodorosUntilLongBreak: number;
 }
 
+const Box = ({ label, value }: { label: string; value: number }) => (
+  <View style={styles.box}>
+    <Text style={styles.label}>{label}</Text>
+    <Text style={styles.value}>{value}</Text>
+  </View>
+);
+
 export default function SessionInfo({
   currentMode,
   pomodorosCount,
   pomodorosUntilLongBreak,
 }: SessionInfoProps) {
   return (
-    <View style={styles.sessionInfoContainer}>
-      <View style={styles.modeContainer}>
-        <Text style={styles.mode}>Mode: </Text>
-        <Text
-          style={[
-            styles.mode,
-            currentMode.name === "work" ? styles.modeWork : styles.modeBreak,
-          ]}
-        >
-          {currentMode.label}
-        </Text>
+    <View style={styles.container}>
+      <Text
+        style={[
+          styles.mode,
+          currentMode.name === "work" ? styles.modeWork : styles.modeBreak,
+        ]}
+      >
+        {currentMode.label}
+      </Text>
+      <View style={styles.boxes}>
+        <Box label="Completed" value={pomodorosCount} />
+        <Box label="Until long break" value={pomodorosUntilLongBreak} />
       </View>
-      <Text style={styles.pomodorosInfo}>
-        Pomodoros completed: {pomodorosCount}
-      </Text>
-      <Text style={styles.pomodorosInfo}>
-        Pomodoros until long break: {pomodorosUntilLongBreak}
-      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sessionInfoContainer: {
-    justifyContent: "center",
+  container: {
+    flexDirection: "column",
+    gap: 20,
+    borderWidth: 2,
+    borderColor: "#e0e0e0",
+    padding: 20,
+    borderRadius: 20,
+    alignItems: "center",
+  },
+  boxes: {
+    flexDirection: "row",
+  },
+  box: {
+    width: 120,
     alignItems: "center",
     flexDirection: "column",
   },
-  modeContainer: {
-    flexDirection: "row",
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  value: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
   mode: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
   },
   modeWork: {
@@ -52,10 +71,5 @@ const styles = StyleSheet.create({
   },
   modeBreak: {
     color: "#800000",
-  },
-
-  pomodorosInfo: {
-    fontSize: 20,
-    fontWeight: "bold",
   },
 });

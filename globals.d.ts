@@ -23,3 +23,9 @@ interface TimerState {
   pomodorosCount: number;
   pomodorosUntilLongBreak: number;
 }
+
+interface IconProps {
+  color?: string;
+  width?: number;
+  height?: number;
+}

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { NumberInput, SwitchInput } from "./Inputs";
+import { SettingsBtn } from "./SettingsBtn";
 
 interface SettingsProps {
   isVisible: boolean;
@@ -40,6 +41,7 @@ export default function Settings({
     modName: keyof Modes,
     number: number,
   ) => {
+    // TODO: check if number is valid
     setPreferences({
       ...preferences,
       modes: {
@@ -79,13 +81,13 @@ export default function Settings({
         increment={() =>
           setPreferences({
             ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 60,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 1,
           })
         }
         decrement={() =>
           setPreferences({
             ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 60,
+            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 1,
           })
         }
       />
@@ -99,9 +101,7 @@ export default function Settings({
           })
         }
       />
-      <TouchableOpacity onPress={setIsVisible} style={styles.closeBtn}>
-        <Text>Hidde settings</Text>
-      </TouchableOpacity>
+      <SettingsBtn onPress={setIsVisible} />
     </Animated.View>
   );
 }
