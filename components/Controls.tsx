@@ -29,9 +29,18 @@ export const Controls = ({
 }: ControlsProps) => {
   return (
     <View style={styles.controls}>
-      <ControlBtn label="Start" onPress={handleStartPause} Icon={StartIcon} />
-      <ControlBtn label="Pause" onPress={handleStartPause} Icon={PauseIcon} />
-      <ControlBtn label="Reset" onPress={handleReset} Icon={ResetIcon} />
+      {!timerStatus ? (
+        <ControlBtn label="Start" onPress={handleStartPause} Icon={StartIcon} />
+      ) : (
+        <>
+          <ControlBtn
+            label="Pause"
+            onPress={handleStartPause}
+            Icon={PauseIcon}
+          />
+          <ControlBtn label="Reset" onPress={handleReset} Icon={ResetIcon} />
+        </>
+      )}
     </View>
   );
 };
