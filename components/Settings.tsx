@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { NumberInput, SwitchInput } from "./Inputs";
+import { SettingsBtn } from "./SettingsBtn";
 
 interface SettingsProps {
   isVisible: boolean;
@@ -100,9 +101,7 @@ export default function Settings({
           })
         }
       />
-      <TouchableOpacity onPress={setIsVisible} style={styles.closeBtn}>
-        <Text>Hidde settings</Text>
-      </TouchableOpacity>
+      <SettingsBtn onPress={setIsVisible} />
     </Animated.View>
   );
 }

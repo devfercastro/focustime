@@ -5,6 +5,7 @@ import { DEFAULT_PREFERENCES } from "./constans";
 import Timer from "./components/Timer";
 import Settings from "./components/Settings";
 import Controls from "./components/Controls";
+import { SettingsBtn } from "./components/SettingsBtn";
 
 import useTimer from "./hooks/useTimer";
 
@@ -36,12 +37,7 @@ export default function App() {
         handleStartPause={handleStartPause}
         handleReset={handleReset}
       />
-      <TouchableOpacity
-        style={[styles.button, { position: "absolute", bottom: 20, left: 20 }]}
-        onPress={handleSettingsVisibility}
-      >
-        <Text style={styles.buttonText}>Show Settings</Text>
-      </TouchableOpacity>
+      <SettingsBtn onPress={handleSettingsVisibility} />
     </View>
   );
 }
