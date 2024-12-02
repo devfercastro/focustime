@@ -22,6 +22,7 @@ interface TimerState {
   mode: Mode;
   pomodorosCount: number;
   pomodorosUntilLongBreak: number;
+  isReseted: boolean;
 }
 
 interface IconProps {

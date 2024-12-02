@@ -15,6 +15,7 @@ export default function useTimer({
     mode: modes.WORK,
     pomodorosCount: 0,
     pomodorosUntilLongBreak,
+    isReseted: true,
   };
 
   const [timerState, setTimerState] = useState<TimerState>(DEFAULT_TIMER_STATE);
@@ -87,6 +88,7 @@ export default function useTimer({
     setTimerState((prevState) => ({
       ...prevState,
       isRunning: !prevState.isRunning,
+      isReseted: false,
     }));
   };
 

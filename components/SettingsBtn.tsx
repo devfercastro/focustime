@@ -9,7 +9,11 @@ interface SettingsBtnProps {
 export const SettingsBtn = ({ onPress, disabled }: SettingsBtnProps) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <SettingsIcon width={40} height={40} color={disabled ? "#ccc" : "#000"} />
+      <SettingsIcon
+        width={40}
+        height={40}
+        color={!disabled ? "#ccc" : "#000"}
+      />
     </TouchableOpacity>
   );
 };
