@@ -19,7 +19,10 @@ export const ControlBtn = ({ label, onPress, Icon }: ButtonProps) => {
 interface ControlsProps {
   handleStartPause: () => void;
   handleReset: () => void;
-  timerStatus: TimerState["isRunning"];
+  timerStatus: {
+    isRunning: TimerState["isRunning"];
+    isReseted: TimerState["isReseted"];
+  };
 }
 
 export const Controls = ({
@@ -29,9 +32,14 @@ export const Controls = ({
 }: ControlsProps) => {
   return (
     <View style={styles.controls}>
-      <ControlBtn label="Start" onPress={handleStartPause} Icon={StartIcon} />
-      <ControlBtn label="Pause" onPress={handleStartPause} Icon={PauseIcon} />
-      <ControlBtn label="Reset" onPress={handleReset} Icon={ResetIcon} />
+      {!timerStatus.isRunning ? (
+        <ControlBtn label="Start" onPress={handleStartPause} Icon={StartIcon} />
+      ) : (
+        <ControlBtn label="Pause" onPress={handleStartPause} Icon={PauseIcon} />
+      )}
+      {!timerStatus.isReseted && (
+        <ControlBtn label="Reset" onPress={handleReset} Icon={ResetIcon} />
+      )}
     </View>
   );
 };

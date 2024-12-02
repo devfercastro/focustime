@@ -1,10 +1,19 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { SettingsIcon } from "./Icons";
 
-export const SettingsBtn = ({ onPress }: { onPress: () => void }) => {
+interface SettingsBtnProps {
+  onPress: () => void;
+  disabled?: boolean;
+}
+
+export const SettingsBtn = ({ onPress, disabled }: SettingsBtnProps) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <SettingsIcon width={40} height={40} />
+      <SettingsIcon
+        width={40}
+        height={40}
+        color={!disabled ? "#ccc" : "#000"}
+      />
     </TouchableOpacity>
   );
 };

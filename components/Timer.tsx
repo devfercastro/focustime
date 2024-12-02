@@ -1,10 +1,8 @@
-import { StyleSheet, Text, View, Animated } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CircularProgressBar from "./CircularProgressBar";
 import { formatTime } from "../helpers";
-import { useEffect, useRef } from "react";
 
 const BORDER = 10;
-const BLINK_DURATION = 1200;
 const WIDTH = 300;
 
 interface TimerProps {
@@ -20,45 +18,13 @@ const TimeIndicator = ({
   isRunning: boolean;
   timeLeft: number;
 }) => {
-  const opacity = useRef(new Animated.Value(1)).current;
   const timeFormated = formatTime(timeLeft);
-
-  useEffect(() => {
-    // If the timer is not running
-    if (!isRunning) {
-      const blink = Animated.sequence([
-        // Fade out to 10% opacity
-        Animated.timing(opacity, {
-          toValue: 0.1,
-          duration: BLINK_DURATION / 2,
-          useNativeDriver: true,
-        }),
-        // Fade out to 100% opacity
-        Animated.timing(opacity, {
-          toValue: 1,
-          duration: BLINK_DURATION / 2,
-          useNativeDriver: true,
-        }),
-      ]);
-
-      // Loop the animation
-      Animated.loop(blink).start();
-    }
-    // If the timer is running
-    else {
-      // Reset opacity to 100%
-      opacity.setValue(1);
-    }
-
-    return () => opacity.stopAnimation();
-  }, [isRunning, opacity]);
-
   return (
-    <Animated.View style={[styles.timeIndicatorContainer, { opacity }]}>
+    <View style={styles.timeIndicatorContainer}>
       <Text style={styles.timeIndicator}>{timeFormated.minutes}</Text>
       <Text style={styles.timeIndicatorSeparator}>:</Text>
       <Text style={styles.timeIndicator}>{timeFormated.seconds}</Text>
-    </Animated.View>
+    </View>
   );
 };
 
