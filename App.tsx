@@ -16,7 +16,7 @@ export default function App() {
   const { timerState, handleStartPause, handleReset } = useTimer(preferences);
 
   const handleSettingsVisibility = () => {
-    setIsSettingsVisible(!isSettingsVisible);
+    if (!timerState.isRunning) setIsSettingsVisible(!isSettingsVisible);
   };
 
   return (
@@ -37,7 +37,10 @@ export default function App() {
         handleStartPause={handleStartPause}
         handleReset={handleReset}
       />
-      <SettingsBtn onPress={handleSettingsVisibility} />
+      <SettingsBtn
+        onPress={handleSettingsVisibility}
+        disabled={timerState.isRunning}
+      />
     </View>
   );
 }
