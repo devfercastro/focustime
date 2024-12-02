@@ -9,6 +9,8 @@ import { SettingsBtn } from "./components/SettingsBtn";
 
 import useTimer from "./hooks/useTimer";
 
+import { AppProvider } from "./context/AppContext";
+
 export default function App() {
   const [preferences, setPreferences] =
     useState<Preferences>(DEFAULT_PREFERENCES);
@@ -21,31 +23,33 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <Settings
-        isVisible={isSettingsVisible}
-        setIsVisible={handleSettingsVisibility}
-        preferences={preferences}
-        setPreferences={setPreferences}
-      />
-      <Timer
-        timeLeft={timerState.timeLeft}
-        duration={timerState.mode.duration}
-        isRunning={timerState.isRunning}
-      />
-      <Controls
-        timerStatus={{
-          isRunning: timerState.isRunning,
-          isReseted: timerState.isReseted,
-        }}
-        handleStartPause={handleStartPause}
-        handleReset={handleReset}
-      />
-      <SettingsBtn
-        onPress={handleSettingsVisibility}
-        disabled={timerState.isReseted && !timerState.isRunning}
-      />
-    </View>
+    <AppProvider>
+      <View style={styles.container}>
+        <Settings
+          isVisible={isSettingsVisible}
+          setIsVisible={handleSettingsVisibility}
+          preferences={preferences}
+          setPreferences={setPreferences}
+        />
+        <Timer
+          timeLeft={timerState.timeLeft}
+          duration={timerState.mode.duration}
+          isRunning={timerState.isRunning}
+        />
+        <Controls
+          timerStatus={{
+            isRunning: timerState.isRunning,
+            isReseted: timerState.isReseted,
+          }}
+          handleStartPause={handleStartPause}
+          handleReset={handleReset}
+        />
+        <SettingsBtn
+          onPress={handleSettingsVisibility}
+          disabled={timerState.isReseted && !timerState.isRunning}
+        />
+      </View>
+    </AppProvider>
   );
 }
 
