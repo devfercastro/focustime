@@ -20,18 +20,17 @@ export default function useTimer({
   const [timerState, setTimerState] = useState<TimerState>(DEFAULT_TIMER_STATE);
 
   useEffect(() => {
-    // If the preferences are changed and the timer is not running, reflect that change
-    if (!timerState.isRunning)
-      setTimerState((prevState) => ({
-        ...prevState,
-        // Update the timeLeft
-        timeLeft:
-          modes[prevState.mode.name.toUpperCase() as keyof Modes].duration,
-        mode: modes[prevState.mode.name.toUpperCase() as keyof Modes],
-        // Update pomodoros until long break
-        pomodorosUntilLongBreak,
-      }));
-  }, [timerState.isRunning, modes, pomodorosUntilLongBreak]);
+    // If the preferences are changed, reflect that change
+    setTimerState((prevState) => ({
+      ...prevState,
+      // Update the timeLeft
+      timeLeft:
+        modes[prevState.mode.name.toUpperCase() as keyof Modes].duration,
+      mode: modes[prevState.mode.name.toUpperCase() as keyof Modes],
+      // Update pomodoros until long break
+      pomodorosUntilLongBreak,
+    }));
+  }, [modes, pomodorosUntilLongBreak]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
