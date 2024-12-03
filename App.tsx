@@ -25,12 +25,7 @@ export default function App() {
   return (
     <AppProvider>
       <View style={styles.container}>
-        <Settings
-          isVisible={isSettingsVisible}
-          setIsVisible={handleSettingsVisibility}
-          preferences={preferences}
-          setPreferences={setPreferences}
-        />
+        <Settings />
         <Timer
           timeLeft={timerState.timeLeft}
           duration={timerState.mode.duration}
@@ -44,10 +39,7 @@ export default function App() {
           handleStartPause={handleStartPause}
           handleReset={handleReset}
         />
-        <SettingsBtn
-          onPress={handleSettingsVisibility}
-          disabled={timerState.isReseted && !timerState.isRunning}
-        />
+        <SettingsBtn />
       </View>
     </AppProvider>
   );

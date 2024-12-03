@@ -1,41 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  Animated,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, Animated, Dimensions } from "react-native";
 import { NumberInput, SwitchInput } from "./Inputs";
-import { SettingsBtn } from "./SettingsBtn";
 
-interface SettingsProps {
-  isVisible: boolean;
-  setIsVisible: () => void;
-  preferences: Preferences;
-  setPreferences: (preferences: Preferences) => void;
-}
+import { usePreferencesContext } from "../context/PreferencesContext";
 
 const [screenHeight, screenWidth] = [
   Dimensions.get("window").height,
   Dimensions.get("window").width,
 ];
 
-export default function Settings({
-  isVisible,
-  setIsVisible,
-  preferences,
-  setPreferences,
-}: SettingsProps) {
+export default function Settings() {
+  const { preferences, setPreferences, isSettingsOpen } =
+    usePreferencesContext();
+
   const translateX = useRef(new Animated.Value(-screenWidth)).current;
 
   useEffect(() => {
     Animated.timing(translateX, {
-      toValue: isVisible ? 0 : -screenWidth,
+      toValue: isSettingsOpen ? 0 : -screenWidth,
       duration: 200,
       useNativeDriver: true,
     }).start();
-  }, [isVisible, translateX]);
+  }, [isSettingsOpen, translateX]);
 
   const handleModePreferencesChange = (
     modName: keyof Modes,
@@ -101,7 +87,6 @@ export default function Settings({
           })
         }
       />
-      <SettingsBtn onPress={setIsVisible} />
     </Animated.View>
   );
 }
@@ -112,7 +97,7 @@ const styles = StyleSheet.create({
     height: screenHeight + 40,
     backgroundColor: "#f2f2f2",
     position: "absolute",
-    zIndex: 600,
+    zIndex: 5,
     padding: 20,
     paddingTop: 50,
     left: 0,
