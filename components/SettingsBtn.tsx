@@ -5,16 +5,21 @@ import { usePreferencesContext } from "../context/PreferencesContext";
 import { useTimerContext } from "../context/TimerContext";
 
 export const SettingsBtn = () => {
-  const { toggleSettings } = usePreferencesContext();
-  const { timerState } = useTimerContext();
+  const { setIsSettingsOpen, isSettingsOpen } = usePreferencesContext();
+  const {
+    timerState: { isReseted, isRunning },
+  } = useTimerContext();
 
-  // TODO: Disable button when timer is running or is not reseted
+  const toggleSettings = () => {
+    if (isReseted && !isRunning) setIsSettingsOpen(!isSettingsOpen);
+  };
+
   return (
     <TouchableOpacity style={styles.button} onPress={toggleSettings}>
       <SettingsIcon
         width={40}
         height={40}
-        color={timerState.isRunning || !timerState.isReseted ? "#ccc" : "#000"}
+        color={isRunning || !isReseted ? "#ccc" : "#000"}
       />
     </TouchableOpacity>
   );

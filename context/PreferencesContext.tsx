@@ -6,7 +6,7 @@ interface PreferencesContextType {
   preferences: Preferences;
   setPreferences: (preferences: Preferences) => void;
   isSettingsOpen: boolean;
-  toggleSettings: () => void;
+  setIsSettingsOpen: (isSettingsOpen: boolean) => void;
 }
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(
@@ -18,15 +18,11 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     useState<Preferences>(DEFAULT_PREFERENCES);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const toggleSettings = () => {
-    setIsSettingsOpen(!isSettingsOpen);
-  };
-
   const value = {
     preferences,
     setPreferences,
     isSettingsOpen,
-    toggleSettings,
+    setIsSettingsOpen,
   };
 
   return (
