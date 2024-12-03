@@ -1,23 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import CircularProgressBar from "./CircularProgressBar";
 import { formatTime } from "../helpers";
+import { useTimerContext } from "../context/TimerContext";
 
 const BORDER = 10;
 const WIDTH = 300;
 
-interface TimerProps {
-  isRunning: boolean;
-  duration: number;
-  timeLeft: number;
-}
-
-const TimeIndicator = ({
-  isRunning,
-  timeLeft,
-}: {
-  isRunning: boolean;
-  timeLeft: number;
-}) => {
+const TimeIndicator = ({ timeLeft }: { timeLeft: number }) => {
   const timeFormated = formatTime(timeLeft);
   return (
     <View style={styles.timeIndicatorContainer}>
@@ -28,7 +17,12 @@ const TimeIndicator = ({
   );
 };
 
-export default function Timer({ isRunning, duration, timeLeft }: TimerProps) {
+export default function Timer() {
+  const {
+    timeLeft,
+    mode: { duration },
+  } = useTimerContext().timerState;
+
   return (
     <View style={styles.timer}>
       <CircularProgressBar
@@ -39,7 +33,7 @@ export default function Timer({ isRunning, duration, timeLeft }: TimerProps) {
         duration={duration}
         timeLeft={timeLeft}
       />
-      <TimeIndicator isRunning={isRunning} timeLeft={timeLeft} />
+      <TimeIndicator timeLeft={timeLeft} />
     </View>
   );
 }
