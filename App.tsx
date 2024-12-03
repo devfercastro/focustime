@@ -1,44 +1,19 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { useState } from "react";
-import { DEFAULT_PREFERENCES } from "./constans";
+import { StyleSheet, View } from "react-native";
 
 import Timer from "./components/Timer";
 import Settings from "./components/Settings";
 import Controls from "./components/Controls";
 import { SettingsBtn } from "./components/SettingsBtn";
 
-import useTimer from "./hooks/useTimer";
-
 import { AppProvider } from "./context/AppContext";
 
 export default function App() {
-  const [preferences, setPreferences] =
-    useState<Preferences>(DEFAULT_PREFERENCES);
-  const [isSettingsVisible, setIsSettingsVisible] = useState<boolean>(false);
-  const { timerState, handleStartPause, handleReset } = useTimer(preferences);
-
-  const handleSettingsVisibility = () => {
-    if (!timerState.isRunning && timerState.isReseted)
-      setIsSettingsVisible(!isSettingsVisible);
-  };
-
   return (
     <AppProvider>
       <View style={styles.container}>
         <Settings />
-        <Timer
-          timeLeft={timerState.timeLeft}
-          duration={timerState.mode.duration}
-          isRunning={timerState.isRunning}
-        />
-        <Controls
-          timerStatus={{
-            isRunning: timerState.isRunning,
-            isReseted: timerState.isReseted,
-          }}
-          handleStartPause={handleStartPause}
-          handleReset={handleReset}
-        />
+        <Timer />
+        <Controls />
         <SettingsBtn />
       </View>
     </AppProvider>

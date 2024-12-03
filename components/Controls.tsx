@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { PauseIcon, ResetIcon, StartIcon } from "./Icons";
+import { useTimerContext } from "../context/TimerContext";
 
 interface ButtonProps {
   label: string;
@@ -16,28 +17,21 @@ export const ControlBtn = ({ label, onPress, Icon }: ButtonProps) => {
   );
 };
 
-interface ControlsProps {
-  handleStartPause: () => void;
-  handleReset: () => void;
-  timerStatus: {
-    isRunning: TimerState["isRunning"];
-    isReseted: TimerState["isReseted"];
-  };
-}
+export const Controls = () => {
+  const {
+    timerState: { isReseted, isRunning },
+    handleReset,
+    handleStartPause,
+  } = useTimerContext();
 
-export const Controls = ({
-  handleStartPause,
-  handleReset,
-  timerStatus,
-}: ControlsProps) => {
   return (
     <View style={styles.controls}>
-      {!timerStatus.isRunning ? (
-        <ControlBtn label="Start" onPress={handleStartPause} Icon={StartIcon} />
-      ) : (
+      {isRunning ? (
         <ControlBtn label="Pause" onPress={handleStartPause} Icon={PauseIcon} />
+      ) : (
+        <ControlBtn label="Start" onPress={handleStartPause} Icon={StartIcon} />
       )}
-      {!timerStatus.isReseted && (
+      {!isReseted && (
         <ControlBtn label="Reset" onPress={handleReset} Icon={ResetIcon} />
       )}
     </View>
