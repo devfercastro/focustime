@@ -16,18 +16,15 @@
    - [x] Auto-start toggle
    - [x] Pomodoros until long break setting
    - [ ] Input validation
-   - [ ] Settings persistence (AsyncStorage)
-   - [ ] Multiple timer presets
+   - [ ] Settings persistence
 
 3. UI/UX
-   - [x] Progress circle animation
-   - [x] Session info display
+   - [ ] Improve progress circle animation
+   - [ ] Session info display
    - [x] Settings drawer
    - [x] Basic styling
    - [ ] Dark/Light theme
-   - [ ] Proper animations
    - [ ] Gesture controls for drawer
-   - [ ] Loading states
    - [ ] Error boundaries
    - [ ] Onboarding flow
    - [ ] Proper app icon
@@ -41,14 +38,9 @@
    - [ ] Tags/Categories
    - [ ] Statistics tracking
    - [ ] Daily goals
-   - [ ] Data export
 
 5. Advanced Features
    - [ ] Push notifications
-   - [ ] Widgets
-   - [ ] Cloud sync
-   - [ ] Social features
-   - [ ] Achievement system
 
 6. Technical Implementation
    - [x] Basic TypeScript setup
@@ -58,7 +50,3 @@
    - [ ] Integration tests
    - [ ] E2E tests
    - [ ] Documentation
-   - [ ] CI/CD setup
-   - [ ] Analytics
-   - [ ] Logging system
-   - [ ] Performance monitoring
