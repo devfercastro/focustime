@@ -21,7 +21,7 @@ export const SwitchInput = ({
   onChange,
 }: SwitchInputProps) => {
   return (
-    <View style={styles.switchContainer}>
+    <View style={switchInputStyles.container}>
       <Text style={styles.inputLabel}>{label}</Text>
       <Switch value={isChecked} onValueChange={onChange} />
     </View>
@@ -38,17 +38,17 @@ export const NumberInput = ({
   const formatedValue = formatTime(value).minutes;
 
   return (
-    <View style={styles.numberInputContainer}>
+    <View style={numberInputStyles.container}>
       <Text style={styles.inputLabel}>{label}</Text>
-      <View style={styles.numberInputBtnsContainer}>
-        <TouchableOpacity style={styles.numberInputBtn} onPress={decrement}>
-          <Text style={styles.numberInputBtnSymbols}>-</Text>
+      <View style={numberInputStyles.btnContainer}>
+        <TouchableOpacity style={numberInputStyles.btn} onPress={decrement}>
+          <Text style={numberInputStyles.btnSymbol}>-</Text>
         </TouchableOpacity>
-        <Text style={styles.numberInputBtnValue}>
+        <Text style={numberInputStyles.btnValue}>
           {formatToMinutes ? formatedValue : String(value).padStart(2, "0")}
         </Text>
-        <TouchableOpacity style={styles.numberInputBtn} onPress={increment}>
-          <Text style={styles.numberInputBtnSymbols}>+</Text>
+        <TouchableOpacity style={numberInputStyles.btn} onPress={increment}>
+          <Text style={numberInputStyles.btnSymbol}>+</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -60,29 +60,29 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
   },
+});
 
-  switchContainer: {
+const switchInputStyles = StyleSheet.create({
+  container: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
   },
-  switchLabel: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
+});
 
-  numberInputContainer: {
+const numberInputStyles = StyleSheet.create({
+  container: {
     flexDirection: "column",
     alignItems: "center",
   },
-  numberInputBtnsContainer: {
+  btnContainer: {
     flexDirection: "row",
     width: 100,
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
   },
-  numberInputBtn: {
+  btn: {
     fontSize: 16,
     borderRadius: 125,
     width: 40,
@@ -91,13 +91,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  numberInputBtnValue: {
+  btnValue: {
     fontSize: 24,
     textAlign: "center",
     width: 50,
     fontWeight: "bold",
   },
-  numberInputBtnSymbols: {
+  btnSymbol: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#fff",
