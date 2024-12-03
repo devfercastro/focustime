@@ -1,18 +1,20 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { SettingsIcon } from "./Icons";
 
-interface SettingsBtnProps {
-  onPress: () => void;
-  disabled?: boolean;
-}
+import { usePreferencesContext } from "../context/PreferencesContext";
+import { useTimerContext } from "../context/TimerContext";
 
-export const SettingsBtn = ({ onPress, disabled }: SettingsBtnProps) => {
+export const SettingsBtn = () => {
+  const { toggleSettings } = usePreferencesContext();
+  const { timerState } = useTimerContext();
+
+  // TODO: Disable button when timer is running or is not reseted
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity style={styles.button} onPress={toggleSettings}>
       <SettingsIcon
         width={40}
         height={40}
-        color={!disabled ? "#ccc" : "#000"}
+        color={timerState.isRunning || !timerState.isReseted ? "#ccc" : "#000"}
       />
     </TouchableOpacity>
   );
@@ -25,5 +27,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     left: 20,
+    zIndex: 10,
   },
 });
