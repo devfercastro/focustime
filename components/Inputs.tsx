@@ -1,5 +1,14 @@
-import { Switch, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Switch,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  useAnimatedValue,
+} from "react-native";
 import { formatTime } from "../helpers";
+import { OffIcon, OnIcon } from "./Icons";
 
 interface SwitchInputProps {
   label: string;
@@ -20,10 +29,36 @@ export const SwitchInput = ({
   isChecked,
   onChange,
 }: SwitchInputProps) => {
+  const transformXAni = useAnimatedValue(isChecked ? 80 - 40 : 0);
+
+  const toggleSwitch = () => {
+    onChange();
+
+    Animated.timing(transformXAni, {
+      toValue: isChecked ? 0 : 80 - 40,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <View style={switchInputStyles.container}>
       <Text style={styles.inputLabel}>{label}</Text>
-      <Switch value={isChecked} onValueChange={onChange} />
+      <TouchableOpacity
+        style={switchInputStyles.switchContainer}
+        onPress={toggleSwitch}
+      >
+        <Animated.View
+          style={[
+            switchInputStyles.switcher,
+            {
+              transform: [{ translateX: transformXAni }],
+            },
+          ]}
+        >
+          {isChecked ? <OffIcon /> : <OnIcon />}
+        </Animated.View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -67,6 +102,28 @@ const switchInputStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+    overflow: "visible",
+  },
+  switchContainer: {
+    width: 80,
+    height: 30,
+    borderRadius: 999,
+    backgroundColor: "#fff",
+    overflow: "visible",
+    position: "relative",
+  },
+  switcher: {
+    width: 40,
+    height: 40,
+    borderRadius: 999,
+    backgroundColor: "#000",
+    color: "#fff",
+    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    top: 0 - 5,
+    left: 0,
   },
 });
 
