@@ -63,3 +63,5 @@
    - [ ] Integration tests
    - [ ] E2E tests
    - [ ] Documentation
+   - [ ] React Scan (optional)
+   - [ ] React Compiler
