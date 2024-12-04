@@ -81,13 +81,17 @@ export const NumberInput = ({
   return (
     <View style={numberInputStyles.container}>
       <Text style={styles.inputLabel}>{label}</Text>
+
       <View style={numberInputStyles.btnContainer}>
         <TouchableOpacity style={numberInputStyles.btn} onPress={decrement}>
           <Text style={numberInputStyles.btnSymbol}>-</Text>
         </TouchableOpacity>
+
         <Text style={numberInputStyles.btnValue}>
+          {/* edge case for pomodoros until long break input */}
           {formatToMinutes ? formatedValue : String(value).padStart(2, "0")}
         </Text>
+
         <TouchableOpacity style={numberInputStyles.btn} onPress={increment}>
           <Text style={numberInputStyles.btnSymbol}>+</Text>
         </TouchableOpacity>
@@ -99,10 +103,11 @@ export const NumberInput = ({
 const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: "bold",
   },
 });
 
+// FIX: must be at least 5px between switcher and switchContainer
 const switchInputStyles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -137,18 +142,20 @@ const numberInputStyles = StyleSheet.create({
     alignItems: "center",
   },
   btnContainer: {
+    width: 150,
+    height: 50,
     flexDirection: "row",
-    width: 100,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
-    gap: 10,
+    backgroundColor: "#000",
+    borderRadius: 999,
+    padding: 5, // don't know why works
   },
   btn: {
-    fontSize: 16,
     borderRadius: 125,
     width: 40,
     height: 40,
-    backgroundColor: "#000",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -157,10 +164,11 @@ const numberInputStyles = StyleSheet.create({
     textAlign: "center",
     width: 50,
     fontWeight: "bold",
+    color: "#fff",
   },
   btnSymbol: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#000",
   },
 });
