@@ -29,21 +29,27 @@ export const SwitchInput = ({
   isChecked,
   onChange,
 }: SwitchInputProps) => {
-  const transformXAni = useAnimatedValue(isChecked ? 80 - 40 : 0);
+  // this is an animated value, dah...
+  const transformXAni = useAnimatedValue(0);
 
+  /*
+   * This function toggles the switch and calls the onChange function
+   */
   const toggleSwitch = () => {
-    onChange();
+    onChange(); // call the onChange function
 
+    // animate the switch
     Animated.timing(transformXAni, {
-      toValue: isChecked ? 0 : 80 - 40,
+      toValue: isChecked ? 0 : 80 - 40, // move to left if not isChecked, move to right if isChecked
       duration: 200,
-      useNativeDriver: true,
+      useNativeDriver: true, // not sure what this does
     }).start();
   };
 
   return (
     <View style={switchInputStyles.container}>
       <Text style={styles.inputLabel}>{label}</Text>
+
       <TouchableOpacity
         style={switchInputStyles.switchContainer}
         onPress={toggleSwitch}
@@ -52,11 +58,11 @@ export const SwitchInput = ({
           style={[
             switchInputStyles.switcher,
             {
-              transform: [{ translateX: transformXAni }],
+              transform: [{ translateX: transformXAni }], // animated value
             },
           ]}
         >
-          {isChecked ? <OffIcon /> : <OnIcon />}
+          {isChecked ? <OnIcon color="#000" /> : <OffIcon color="#000" />}
         </Animated.View>
       </TouchableOpacity>
     </View>
@@ -102,28 +108,26 @@ const switchInputStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    overflow: "visible",
   },
   switchContainer: {
-    width: 80,
-    height: 30,
-    borderRadius: 999,
-    backgroundColor: "#fff",
-    overflow: "visible",
+    width: 80 + 8, // For some reason the extra must be 8 and not 4
+    height: 50,
     position: "relative",
+    padding: 2,
+    borderRadius: 999,
+    backgroundColor: "#000",
   },
   switcher: {
     width: 40,
     height: 40,
-    borderRadius: 999,
-    backgroundColor: "#000",
-    color: "#fff",
+    top: 5, // This one izi cause it's parent height is 50
+    left: 4, // For some reason must be 4 and not 2
     overflow: "hidden",
+    position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    top: 0 - 5,
-    left: 0,
+    borderRadius: 999,
+    backgroundColor: "#fff",
   },
 });
 
