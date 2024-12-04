@@ -30,17 +30,17 @@ export const SwitchInput = ({
   onChange,
 }: SwitchInputProps) => {
   // this is an animated value, dah...
-  const transformXAni = useAnimatedValue(0);
+  const transformXAni = useAnimatedValue(isChecked ? 80 - 40 : 0);
 
   /*
-   * This function toggles the switch and calls the onChange function
+   * This function runs the onChange function and triggers the switch animation
    */
   const toggleSwitch = () => {
     onChange(); // call the onChange function
 
-    // animate the switch
+    // start the animation
     Animated.timing(transformXAni, {
-      toValue: isChecked ? 0 : 80 - 40, // move to left if not isChecked, move to right if isChecked
+      toValue: !isChecked ? 80 - 40 : 0, // if false move it to the right, otherwise move to left
       duration: 200,
       useNativeDriver: true, // not sure what this does
     }).start();
