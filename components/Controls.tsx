@@ -12,7 +12,6 @@ export const ControlBtn = ({ label, onPress, Icon }: ButtonProps) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Icon />
-      <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   );
 };
@@ -42,18 +41,16 @@ const styles = StyleSheet.create({
   controls: {
     flexDirection: "column",
     rowGap: 10,
-    height: 50 * 3 + 10 * 2,
+    height: 100 * 2 + 10 * 2, // the size of two buttons (100 * 2) + the gap between them (10 * 2)
   },
   button: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
-    padding: 10,
-    borderRadius: 10,
+    borderRadius: 999,
     backgroundColor: "#000",
     width: 100,
-    height: 50,
+    height: 100,
   },
   label: {
     color: "#fff",
