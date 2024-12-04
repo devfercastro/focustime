@@ -93,23 +93,14 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
   container: {
-    width: screenWidth * 0.75,
-    height: screenHeight + 40,
+    width: screenWidth * 0.75, // take the 3/4 of the screen (TODO: change it to laptop)
+    height: screenHeight + 40, // for some reason I have to add 40px
     backgroundColor: "#f2f2f2",
     position: "absolute",
-    zIndex: 5,
+    zIndex: 5, // SettingsBtn has zIndex of 10, and I don't want to cover it
     padding: 20,
     paddingTop: 50,
     left: 0,
-    rowGap: 20,
-  },
-
-  closeBtn: {
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    borderRadius: 600,
-    backgroundColor: "red",
-    padding: 20,
+    rowGap: 40,
   },
 });
