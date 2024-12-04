@@ -1,5 +1,8 @@
 import Svg, { Path } from "react-native-svg";
 
+// TODO: Make my own icons cause some can't use strokeWidth prop
+// TODO: Add plus and minus icons
+
 export const ResetIcon = ({
   color = "white",
   width = 18,
