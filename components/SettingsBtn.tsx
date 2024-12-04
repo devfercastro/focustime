@@ -33,5 +33,7 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     zIndex: 10,
+    padding: 10,
+    borderRadius: 999,
   },
 });
