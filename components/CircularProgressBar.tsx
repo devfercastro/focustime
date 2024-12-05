@@ -1,17 +1,17 @@
 import Svg, { Path } from "react-native-svg";
-import { StyleSheet } from "react-native";
 import type { StyleProp, ViewStyle } from "react-native";
 import { calculateArcCoordinates, calculateProgress } from "../helpers/index";
 
 interface CircularProgressBarProps {
-  width?: number;
-  strokeWidth?: number;
-  color?: string;
+  width: number;
+  strokeWidth: number;
+  color: string;
   style?: StyleProp<ViewStyle>;
   timeLeft: number;
   duration: number;
 }
 
+// TODO: use const component or function but not both asshole.
 const CircularProgressBar = ({
   width = 200,
   strokeWidth = 20,
@@ -20,9 +20,10 @@ const CircularProgressBar = ({
   timeLeft,
   duration,
 }: CircularProgressBarProps) => {
+  // calculates the percentage of the consumed time
   const progress = calculateProgress(timeLeft, duration);
 
-  // Calculate the final coordinates of the arc based on progress
+  // calculate the final coordinates of the arc based on progress
   const { radius, center, x, y, largeArcFlag } = calculateArcCoordinates(
     progress,
     width,
@@ -32,15 +33,25 @@ const CircularProgressBar = ({
   // Calculate initial coordinates for the arc
   const [cx, cy] = [center, strokeWidth / 2];
 
+  // circle svg path
   let path: string;
 
+  // if progress >= 1 (full circle or 100% of time completed), draw 2 180° arcs
+  // why not just draw 1 360° arc? well fucking arc hides if start coordinates === end coordinates
   if (progress >= 1) {
+    // the only differences between the 2 arcs is the clockwise/counterclockwise flag
     const rightArc = `M${cx} ${cy} A ${radius} ${radius} 0 0 1 ${cx} ${width - cy}`;
+    //                                            this number right here
+    //                                                      |
     const leftArc = `M${cx} ${cy} A ${radius} ${radius} 0 0 0 ${cx} ${width - cy}`;
 
     path = `${rightArc} ${leftArc}`;
-  } else {
+  }
+  // if progres < 1 or time < 100% completed, draw 1 arc clockwise
+  else {
+    // arc path, I'm gonna fully explain what arcs are just ask chatGPT for "svg arcs" information
     const arcPath = `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x} ${y}`;
+    // this `M${cx} ${cy}` are the start coordinates of the arc
     path = `M${cx} ${cy} ${arcPath}`;
   }
 
