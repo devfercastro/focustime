@@ -3,6 +3,7 @@ import CircularProgressBar from "./CircularProgressBar";
 import { formatTime } from "../helpers";
 import { useTimerContext } from "../context/TimerContext";
 
+// yea I know there are better ways, fuck off
 const BORDER = 10;
 const WIDTH = 300;
 
@@ -14,6 +15,7 @@ const TimeIndicator = ({
   timeLeft: number;
 }) => {
   const timeFormated = formatTime(timeLeft);
+
   return (
     <View style={timeIndicatorStyles.container}>
       <View style={timeIndicatorStyles.timeContainer}>
@@ -53,48 +55,12 @@ export default function Timer() {
   );
 }
 
-const styles = StyleSheet.create({
-  timer: {
-    width: WIDTH,
-    height: WIDTH,
-    borderRadius: WIDTH,
-    borderWidth: BORDER,
-    borderColor: "#e0e0e0",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-  },
-  progressBar: {
-    position: "absolute",
-    top: -BORDER,
-    left: -BORDER,
-  },
-
-  timeIndicatorContainer: {
-    width: 140,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-  },
-  timeIndicator: {
-    fontSize: 48,
-    fontWeight: "bold",
-    width: 50,
-    textAlign: "center",
-  },
-  timeIndicatorSeparator: {
-    fontSize: 48,
-    fontWeight: "bold",
-    width: 22,
-    textAlign: "center",
-  },
-});
-
 const timerStyles = StyleSheet.create({
+  // the container acts as a background of the progress bar
   container: {
     width: WIDTH,
     height: WIDTH,
-    borderRadius: WIDTH,
+    borderRadius: 999,
     borderWidth: BORDER,
     borderColor: "#e0e0e0",
     alignItems: "center",
@@ -103,7 +69,7 @@ const timerStyles = StyleSheet.create({
   },
   progressBar: {
     position: "absolute",
-    top: -BORDER,
+    top: -BORDER, // for some reason I have to do this to center the progress bar
     left: -BORDER,
   },
 });
@@ -131,6 +97,8 @@ const timeIndicatorStyles = StyleSheet.create({
     width: 22,
     textAlign: "center",
   },
+  // the reason for this is to leave the time indicator at the center
+  // don't touch it
   mode: {
     position: "absolute",
     top: 48 + 10, // the timeValue fontSize + 10px of space
