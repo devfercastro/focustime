@@ -35,13 +35,10 @@
 
 3. UI/UX
    - [ ] Improve progress circle animation
-   - [ ] Session info display
+   - [x] Session info display
    - [x] Settings drawer
    - [x] Basic styling
    - [ ] Dark/Light theme
-   - [ ] Gesture controls for drawer
-   - [ ] Error boundaries
-   - [ ] Onboarding flow
    - [ ] Proper app icon
    - [ ] Splash screen
 
@@ -53,7 +50,7 @@
    - [ ] Daily goals
 
 5. Advanced Features
-   - [ ] Push notifications
+   - [ ] Push notification that shows timer progress
 
 6. Technical Implementation
    - [x] Basic TypeScript setup
