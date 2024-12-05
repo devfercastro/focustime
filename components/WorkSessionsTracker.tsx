@@ -12,10 +12,7 @@ interface WorkSessionIndicatorProps {
 const WorkSessionIndicator = ({
   isCompleted = true,
   isCurrent = false,
-}: {
-  isCompleted?: boolean;
-  isCurrent?: boolean;
-}) => {
+}: WorkSessionIndicatorProps) => {
   return (
     <Svg height={18} width={18}>
       <Circle
