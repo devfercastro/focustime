@@ -38,9 +38,10 @@ export default function WorkSessionsTracker() {
     [],
   );
 
+  // hook that updates the sessions indicator mainly when pomodrosCount changes (pomodorosUntilLongBreak should't change while timer is running only after restart)
   useEffect(() => {
     // edge case when pomodorosCount is greater that pomodorosUntilLongBreak
-    // e.i. pomodorosCount is 16 and pomodorosUntilLongBreak is 4, this returns 0 because it's four iteration
+    // e.i. pomodorosCount is 16 and pomodorosUntilLongBreak is 4, this returns 0 because it's means it's first in four iteration
     const actualPomodorosCount = pomodorosCount % pomodorosUntilLongBreak;
 
     const updatedWorkSessions = Array(pomodorosUntilLongBreak)
@@ -48,8 +49,8 @@ export default function WorkSessionsTracker() {
       .map(
         (_, index: number) =>
           ({
-            isCurrent: index === actualPomodorosCount,
-            isCompleted: index < actualPomodorosCount,
+            isCurrent: index === actualPomodorosCount, // if it's the current pomodoro
+            isCompleted: index < actualPomodorosCount, // if it's completed
           }) as WorkSessionIndicatorProps,
       );
 
@@ -60,7 +61,7 @@ export default function WorkSessionsTracker() {
     <View style={styles.container}>
       {workSessions.map((data, index) => (
         <WorkSessionIndicator
-          key={`WorkSessionIndicator${index + 1}`}
+          key={`WorkSessionIndicator${index + 1}`} // this is really annoying
           {...data}
         />
       ))}

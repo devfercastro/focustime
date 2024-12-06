@@ -10,6 +10,10 @@ export const SettingsBtn = () => {
     timerState: { isReseted, isRunning },
   } = useTimerContext();
 
+  /*
+   * This function toggles the settings open/close
+   * only if the timer is not running and is reseted, it will close/open the settings
+   */
   const toggleSettings = () => {
     if (isReseted && !isRunning) setIsSettingsOpen(!isSettingsOpen);
   };
