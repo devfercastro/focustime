@@ -1,3 +1,4 @@
+// TODO: change "work" => "pomodoro"
 import { StyleSheet, View } from "react-native";
 
 import Timer from "./components/Timer";
