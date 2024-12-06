@@ -4,15 +4,15 @@ import { Svg, Circle } from "react-native-svg";
 import { useTimerContext } from "../context/TimerContext";
 import { usePreferencesContext } from "../context/PreferencesContext";
 
-interface WorkSessionIndicatorProps {
+interface PomodoroIndicatorProps {
   isCompleted: boolean;
   isCurrent: boolean;
 }
 
-const WorkSessionIndicator = ({
+const PomodoroIndicator = ({
   isCompleted = true,
   isCurrent = false,
-}: WorkSessionIndicatorProps) => {
+}: PomodoroIndicatorProps) => {
   return (
     <Svg height={18} width={18}>
       <Circle
@@ -27,42 +27,37 @@ const WorkSessionIndicator = ({
   );
 };
 
-export default function WorkSessionsTracker() {
+export default function PomodorosTracker() {
   const {
-    timerState: { pomodorosCount },
+    timerState: { pomodoroIndex },
   } = useTimerContext();
   const {
     preferences: { pomodorosUntilLongBreak },
   } = usePreferencesContext();
-  const [workSessions, setWorkSessions] = useState<WorkSessionIndicatorProps[]>(
-    [],
-  );
+  const [pomodoros, setPomodoros] = useState<PomodoroIndicatorProps[]>([]);
 
   useEffect(() => {
-    // edge case when pomodorosCount is greater that pomodorosUntilLongBreak
-    // e.i. pomodorosCount is 16 and pomodorosUntilLongBreak is 4, this returns 0 because it's four iteration
-    const actualPomodorosCount = pomodorosCount % pomodorosUntilLongBreak;
+    // edge case when pomodoroIndex is greater that pomodorosUntilLongBreak
+    // e.i. pomodoroIndex is 16 and pomodorosUntilLongBreak is 4, this returns 0 because it's four iteration
+    const actualpomodoroIndex = pomodoroIndex % pomodorosUntilLongBreak;
 
-    const updatedWorkSessions = Array(pomodorosUntilLongBreak)
+    const updatedPomodoros = Array(pomodorosUntilLongBreak)
       .fill(null)
       .map(
         (_, index: number) =>
           ({
-            isCurrent: index === actualPomodorosCount,
-            isCompleted: index < actualPomodorosCount,
-          }) as WorkSessionIndicatorProps,
+            isCurrent: index === actualpomodoroIndex,
+            isCompleted: index < actualpomodoroIndex,
+          }) as PomodoroIndicatorProps,
       );
 
-    setWorkSessions(updatedWorkSessions);
-  }, [pomodorosCount, pomodorosUntilLongBreak]);
+    setPomodoros(updatedPomodoros);
+  }, [pomodoroIndex, pomodorosUntilLongBreak]);
 
   return (
     <View style={styles.container}>
-      {workSessions.map((data, index) => (
-        <WorkSessionIndicator
-          key={`WorkSessionIndicator${index + 1}`}
-          {...data}
-        />
+      {pomodoros.map((data, index) => (
+        <PomodoroIndicator key={`PomodoroIndicator${index + 1}`} {...data} />
       ))}
     </View>
   );

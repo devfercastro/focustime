@@ -1,11 +1,10 @@
-// TODO: change "work" => "pomodoro"
 import { StyleSheet, View } from "react-native";
 
 import Timer from "./components/Timer";
 import Settings from "./components/Settings";
 import Controls from "./components/Controls";
 import { SettingsBtn } from "./components/SettingsBtn";
-import WorkSessionsTracker from "./components/WorkSessionsTracker";
+import PomodoroTracker from "./components/PomodoroTracker";
 
 import { AppProvider } from "./context/AppContext";
 
@@ -15,7 +14,7 @@ export default function App() {
       <View style={styles.container}>
         <Settings />
         <Timer />
-        <WorkSessionsTracker />
+        <PomodoroTracker />
         <Controls />
         <SettingsBtn />
       </View>
@@ -31,28 +30,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     rowGap: 50,
     position: "relative",
-  },
-
-  title: {
-    fontSize: 34,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-
-  controlsContainer: {
-    flexDirection: "row",
-    gap: 20,
-  },
-  button: {
-    backgroundColor: "#000",
-    borderRadius: 8,
-    padding: 16,
-    width: 80,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "bold",
   },
 });

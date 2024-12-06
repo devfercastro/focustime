@@ -15,8 +15,8 @@ export default function useTimer({
   // check TimerState interface for more info
   const DEFAULT_TIMER_STATE: TimerState = {
     isRunning: false,
-    timeLeft: modes.WORK.duration,
-    mode: modes.WORK,
+    timeLeft: modes.POMODORO.duration,
+    mode: modes.POMODORO,
     pomodoroIndex: 1,
     pomodorosUntilLongBreak,
     isReseted: true,
@@ -73,7 +73,7 @@ export default function useTimer({
     }
 
     // on pomodoro mode, changes to short/long break
-    if (timerState.mode.name === "work") {
+    if (timerState.mode.name === "pomodoro") {
       // change to short break if is not the last pomodoro
       if (timerState.pomodoroIndex < timerState.pomodorosUntilLongBreak) {
         setTimerState((prevState) => ({
@@ -95,8 +95,8 @@ export default function useTimer({
     else {
       setTimerState((prevState) => ({
         ...prevState,
-        mode: modes.WORK, // set mode to pomodoro
-        timeLeft: modes.WORK.duration, // reset the time left to pomodoro duration
+        mode: modes.POMODORO, // set mode to pomodoro
+        timeLeft: modes.POMODORO.duration, // reset the time left to pomodoro duration
         pomodoroIndex:
           prevState.mode.name === "longBreak" // on long break mode
             ? 1 // reset the pomodoro session index to 1

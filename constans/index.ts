@@ -1,7 +1,7 @@
 export const MODES: Modes = {
-  WORK: {
-    name: "work",
-    label: "WORK",
+  POMODORO: {
+    name: "pomodoro",
+    label: "POMODORO",
     duration: 25 * 60,
     // duration: 25, // for testing 25 seconds
   },

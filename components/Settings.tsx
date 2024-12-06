@@ -43,10 +43,10 @@ export default function Settings() {
   return (
     <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
       <NumberInput
-        label="Work"
-        value={preferences.modes.WORK.duration}
-        increment={() => handleModePreferencesChange("WORK", 60)}
-        decrement={() => handleModePreferencesChange("WORK", -60)}
+        label="Pomodoro"
+        value={preferences.modes.POMODORO.duration}
+        increment={() => handleModePreferencesChange("POMODORO", 60)}
+        decrement={() => handleModePreferencesChange("POMODORO", -60)}
       />
       <NumberInput
         label="Short break"
@@ -61,7 +61,7 @@ export default function Settings() {
         decrement={() => handleModePreferencesChange("LONG_BREAK", -60)}
       />
       <NumberInput
-        label="Pomodoros until long break:"
+        label="Pomodoros until long break"
         value={preferences.pomodorosUntilLongBreak}
         formatToMinutes={false}
         increment={() =>

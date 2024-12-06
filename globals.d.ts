@@ -1,11 +1,11 @@
 type Mode = {
-  name: "work" | "shortBreak" | "longBreak";
+  name: "pomodoro" | "shortBreak" | "longBreak";
   label: string;
   duration: number;
 };
 
 type Modes = {
-  WORK: Mode;
+  POMODORO: Mode;
   SHORT_BREAK: Mode;
   LONG_BREAK: Mode;
 };
@@ -19,7 +19,7 @@ interface Preferences {
 interface TimerState {
   timeLeft: number; // I think it's obvious
   mode: Mode; // the current timer mode
-  pomodoroIndex: number; // the index of the current work session (non-zero index)
+  pomodoroIndex: number; // the index of the current pomodoro session (non-zero index)
   pomodorosUntilLongBreak: number; // max number of prefered pomodoros until long break comes up
 
   isRunning: boolean; // to check if timer is running or it's paused
