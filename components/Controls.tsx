@@ -1,14 +1,13 @@
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { PauseIcon, ResetIcon, StartIcon } from "./Icons";
 import { useTimerContext } from "../context/TimerContext";
 
 interface ButtonProps {
-  label: string;
   onPress: () => void;
   Icon: React.ComponentType<IconProps>;
 }
 
-export const ControlBtn = ({ label, onPress, Icon }: ButtonProps) => {
+export const ControlBtn = ({ onPress, Icon }: ButtonProps) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Icon />
@@ -26,13 +25,11 @@ export const Controls = () => {
   return (
     <View style={styles.controls}>
       {isRunning ? (
-        <ControlBtn label="Pause" onPress={handleStartPause} Icon={PauseIcon} />
+        <ControlBtn onPress={handleStartPause} Icon={PauseIcon} />
       ) : (
-        <ControlBtn label="Start" onPress={handleStartPause} Icon={StartIcon} />
+        <ControlBtn onPress={handleStartPause} Icon={StartIcon} />
       )}
-      {!isReseted && (
-        <ControlBtn label="Reset" onPress={handleReset} Icon={ResetIcon} />
-      )}
+      {!isReseted && <ControlBtn onPress={handleReset} Icon={ResetIcon} />}
     </View>
   );
 };
@@ -51,10 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     width: 100,
     height: 100,
-  },
-  label: {
-    color: "#fff",
-    fontSize: 20,
   },
 });
 
