@@ -37,19 +37,18 @@ export default function PomodorosTracker() {
   const [pomodoros, setPomodoros] = useState<PomodoroIndicatorProps[]>([]);
 
   useEffect(() => {
-    // edge case when pomodoroIndex is greater that pomodorosUntilLongBreak
-    // e.i. pomodoroIndex is 16 and pomodorosUntilLongBreak is 4, this returns 0 because it's four iteration
-    const actualpomodoroIndex = pomodoroIndex % pomodorosUntilLongBreak;
-
+    console.log({ pomodoroIndex, pomodorosUntilLongBreak });
     const updatedPomodoros = Array(pomodorosUntilLongBreak)
       .fill(null)
-      .map(
-        (_, index: number) =>
-          ({
-            isCurrent: index === actualpomodoroIndex,
-            isCompleted: index < actualpomodoroIndex,
-          }) as PomodoroIndicatorProps,
-      );
+      .map((_, index: number) => {
+        const currentIndex = index + 1; // remember pomodoro index it's non-zero
+
+        return {
+          // add 1 to index, because pomodoroIndex it's non-zero
+          isCurrent: currentIndex === pomodoroIndex,
+          isCompleted: currentIndex < pomodoroIndex,
+        } as PomodoroIndicatorProps;
+      });
 
     setPomodoros(updatedPomodoros);
   }, [pomodoroIndex, pomodorosUntilLongBreak]);
@@ -57,7 +56,7 @@ export default function PomodorosTracker() {
   return (
     <View style={styles.container}>
       {pomodoros.map((data, index) => (
-        <PomodoroIndicator key={`PomodoroIndicator${index + 1}`} {...data} />
+        <PomodoroIndicator key={`pomodoroIndicator${index + 1}`} {...data} />
       ))}
     </View>
   );

@@ -80,6 +80,7 @@ export default function useTimer({
           ...prevState,
           mode: modes.SHORT_BREAK, // set mode to short break
           timeLeft: modes.SHORT_BREAK.duration, // reset the time left to short break duration
+          pomodoroIndex: prevState.pomodoroIndex + 1, // increment the pomodoro session index
         }));
       }
       // change to long break if is the last pomodoro
@@ -88,6 +89,7 @@ export default function useTimer({
           ...prevState,
           mode: modes.LONG_BREAK, // set mode to long break
           timeLeft: modes.LONG_BREAK.duration, // reset the time left to long break duration
+          pomodoroIndex: prevState.pomodoroIndex + 1, // increment the pomodoro session index
         }));
       }
     }
@@ -99,8 +101,8 @@ export default function useTimer({
         timeLeft: modes.POMODORO.duration, // reset the time left to pomodoro duration
         pomodoroIndex:
           prevState.mode.name === "longBreak" // on long break mode
-            ? 1 // reset the pomodoro session index to 1
-            : prevState.pomodoroIndex + 1, // otherwise (means short break mode) increment the pomodoro session index
+            ? 1 // reset the pomodoro index to 1
+            : prevState.pomodoroIndex, // otherwise (means short break mode) do nothing
       }));
     }
   };
