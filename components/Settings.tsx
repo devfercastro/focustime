@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, Animated, Dimensions } from "react-native";
+import { useEffect, useRef } from "react";
+import { StyleSheet, Animated, Dimensions } from "react-native";
 import { NumberInput, SwitchInput } from "./Inputs";
 
 import { usePreferencesContext } from "../context/PreferencesContext";
 
+// TODO: move this to another place
 const [screenHeight, screenWidth] = [
   Dimensions.get("window").height,
   Dimensions.get("window").width,
@@ -13,16 +14,24 @@ export default function Settings() {
   const { preferences, setPreferences, isSettingsOpen } =
     usePreferencesContext();
 
+  // animated value for horizontal sliding animation
   const translateX = useRef(new Animated.Value(-screenWidth)).current;
 
+  // hook that triggers horizontal sliding animation when `isSettingsOpen` changes
+  // `translateX` was added cause biome cries to much if not
   useEffect(() => {
     Animated.timing(translateX, {
-      toValue: isSettingsOpen ? 0 : -screenWidth,
+      toValue: isSettingsOpen ? 0 : -screenWidth, // if settings are open, slide to left, otherwise slide to right
       duration: 200,
       useNativeDriver: true,
     }).start();
   }, [isSettingsOpen, translateX]);
 
+  /*
+   * This function modifies modes duration (Work/Short Break/Long Break)
+   * @param the mode to change
+   * @param the number of seconds to add/subtract (depends if it's positive or negative)
+   */
   const handleModePreferencesChange = (
     modName: keyof Modes,
     number: number,
@@ -30,10 +39,13 @@ export default function Settings() {
     // TODO: check if number is valid
     setPreferences({
       ...preferences,
+      // on modes
       modes: {
         ...preferences.modes,
+        // on the mode to modify
         [modName]: {
           ...preferences.modes[modName],
+          // change the duration
           duration: preferences.modes[modName].duration + number,
         },
       },
@@ -78,7 +90,7 @@ export default function Settings() {
         }
       />
       <SwitchInput
-        label="Autostart next mode:"
+        label="Autostart next mode"
         isChecked={preferences.autoStartNextMode}
         onChange={() =>
           setPreferences({
@@ -94,7 +106,7 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     width: screenWidth * 0.75, // take the 3/4 of the screen (TODO: change it to laptop)
-    height: screenHeight + 40, // for some reason I have to add 40px
+    height: screenHeight + 40, // for some reason I have to add 40px, I forgot why tbh
     backgroundColor: "#f2f2f2",
     position: "absolute",
     zIndex: 5, // SettingsBtn has zIndex of 10, and I don't want to cover it
