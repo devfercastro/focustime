@@ -4,7 +4,7 @@ import Timer from "./components/Timer";
 import Settings from "./components/Settings";
 import Controls from "./components/Controls";
 import { SettingsBtn } from "./components/SettingsBtn";
-import WorkSessionsTracker from "./components/WorkSessionsTracker";
+import PomodoroTracker from "./components/PomodoroTracker";
 
 import { AppProvider } from "./context/AppContext";
 
@@ -14,7 +14,7 @@ export default function App() {
       <View style={styles.container}>
         <Settings />
         <Timer />
-        <WorkSessionsTracker />
+        <PomodoroTracker />
         <Controls />
         <SettingsBtn />
       </View>
