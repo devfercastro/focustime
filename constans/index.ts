@@ -2,20 +2,20 @@ export const MODES: Modes = {
   POMODORO: {
     name: "pomodoro",
     label: "POMODORO",
-    duration: 25 * 60,
-    // duration: 25, // for testing 25 seconds
+    // duration: 25 * 60,
+    duration: 10, // for testing
   },
   SHORT_BREAK: {
     name: "shortBreak",
     label: "SHORT BREAK",
-    duration: 5 * 60,
-    // duration: 5, // for testing 5 seconds
+    // duration: 5 * 60,
+    duration: 10, // for testing
   },
   LONG_BREAK: {
     name: "longBreak",
     label: "LONG BREAK",
-    duration: 15 * 60,
-    // duration: 15, // for testing 15 seconds
+    // duration: 15 * 60,
+    duration: 10, // for testing
   },
 };
 
