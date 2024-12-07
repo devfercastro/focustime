@@ -114,7 +114,7 @@ export default function useTimer({
     setTimerState((prevState) => ({
       ...prevState,
       isRunning: !prevState.isRunning,
-      isReseted: false, // to forbidde the user from changing preferences once session it's started
+      isReseted: false, // to forbidde the user from changing preferences once session it's started (check SettingsBtn.tsx)
     }));
   };
 
