@@ -9,19 +9,13 @@ import {
 } from "react-native";
 import { formatTime } from "../helpers";
 import { OffIcon, OnIcon } from "./Icons";
+import { useEffect, useRef, useState } from "react";
+import { usePreferencesContext } from "../context/PreferencesContext";
 
 interface SwitchInputProps {
   label: string;
   isChecked: boolean;
   onChange: () => void;
-}
-
-interface NumberInputProps {
-  label: string;
-  value: number;
-  increment: () => void;
-  decrement: () => void;
-  formatToMinutes?: boolean;
 }
 
 export const SwitchInput = ({
@@ -30,6 +24,7 @@ export const SwitchInput = ({
   onChange,
 }: SwitchInputProps) => {
   // this is an animated value, dah...
+  // TODO: implement useRef
   const transformXAni = useAnimatedValue(isChecked ? 80 - 40 : 0);
 
   /*
@@ -69,30 +64,99 @@ export const SwitchInput = ({
   );
 };
 
+interface NumberInputProps {
+  label: string;
+  preferenceName: keyof Modes | "pomodorosUntilLongBreak";
+  minMax: [number, number];
+  step: number;
+  formatToMinutes?: boolean;
+}
+
 export const NumberInput = ({
   label,
-  value,
-  increment,
-  decrement,
+  preferenceName,
+  minMax,
+  step,
   formatToMinutes = true,
 }: NumberInputProps) => {
-  const formatedValue = formatTime(value).minutes;
+  const { preferences, setPreferences } = usePreferencesContext();
+
+  /*
+   * This function returns the current value of the preference
+   * @param the preference to get the value
+   */
+  const getCurrentValue = (
+    preferenceName: keyof Modes | "pomodorosUntilLongBreak",
+  ): number => {
+    // I don't know why I can't use the ternary operator here
+    if (preferenceName === "pomodorosUntilLongBreak") {
+      return preferences.pomodorosUntilLongBreak;
+    }
+    return preferences.modes[preferenceName].duration;
+  };
+
+  /*
+   * This function replaces the current value of the preference with a new one
+   * @param the new value to set
+   */
+  const changeCurrentValue = (newValue: number): void => {
+    // again I can't use thernary operator. At least is more readable this way, right?
+    if (preferenceName === "pomodorosUntilLongBreak") {
+      setPreferences({
+        ...preferences,
+        pomodorosUntilLongBreak: newValue,
+      });
+    } else {
+      setPreferences({
+        ...preferences,
+        modes: {
+          ...preferences.modes,
+          [preferenceName]: {
+            ...preferences.modes[preferenceName],
+            duration: newValue,
+          },
+        },
+      });
+    }
+  };
+
+  /*
+   * This function modifies modes duration (Work/Short Break/Long Break)
+   * @param the mode to change
+   * @param the number of seconds to add/subtract (depends if it's positive or negative)
+   */
+  const handleChange = (value: number) => {
+    const currentValue = getCurrentValue(preferenceName);
+    const newValue = currentValue + value;
+    // check if new value is valid
+    if (newValue >= minMax[0] && newValue <= minMax[1]) {
+      changeCurrentValue(newValue);
+    }
+  };
 
   return (
     <View style={numberInputStyles.container}>
       <Text style={styles.inputLabel}>{label}</Text>
 
       <View style={numberInputStyles.btnContainer}>
-        <TouchableOpacity style={numberInputStyles.btn} onPress={decrement}>
+        <TouchableOpacity
+          style={numberInputStyles.btn}
+          onPress={() => handleChange(-step)} // subtracts the step
+        >
           <Text style={numberInputStyles.btnSymbol}>-</Text>
         </TouchableOpacity>
 
         <Text style={numberInputStyles.btnValue}>
           {/* edge case for pomodoros until long break input */}
-          {formatToMinutes ? formatedValue : String(value).padStart(2, "0")}
+          {formatToMinutes
+            ? formatTime(getCurrentValue(preferenceName)).minutes
+            : getCurrentValue(preferenceName)}
         </Text>
 
-        <TouchableOpacity style={numberInputStyles.btn} onPress={increment}>
+        <TouchableOpacity
+          style={numberInputStyles.btn}
+          onPress={() => handleChange(step)} // adds the step
+        >
           <Text style={numberInputStyles.btnSymbol}>+</Text>
         </TouchableOpacity>
       </View>

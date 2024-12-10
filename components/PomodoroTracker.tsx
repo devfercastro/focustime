@@ -37,7 +37,6 @@ export default function PomodorosTracker() {
   const [pomodoros, setPomodoros] = useState<PomodoroIndicatorProps[]>([]);
 
   useEffect(() => {
-    console.log({ pomodoroIndex, pomodorosUntilLongBreak });
     const updatedPomodoros = Array(pomodorosUntilLongBreak)
       .fill(null)
       .map((_, index: number) => {

@@ -27,67 +27,32 @@ export default function Settings() {
     }).start();
   }, [isSettingsOpen, translateX]);
 
-  /*
-   * This function modifies modes duration (Work/Short Break/Long Break)
-   * @param the mode to change
-   * @param the number of seconds to add/subtract (depends if it's positive or negative)
-   */
-  const handleModePreferencesChange = (
-    modName: keyof Modes,
-    number: number,
-  ) => {
-    // TODO: check if number is valid
-    setPreferences({
-      ...preferences,
-      // on modes
-      modes: {
-        ...preferences.modes,
-        // on the mode to modify
-        [modName]: {
-          ...preferences.modes[modName],
-          // change the duration
-          duration: preferences.modes[modName].duration + number,
-        },
-      },
-    });
-  };
-
   return (
     <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
       <NumberInput
-        label="Pomodoro"
-        value={preferences.modes.POMODORO.duration}
-        increment={() => handleModePreferencesChange("POMODORO", 60)}
-        decrement={() => handleModePreferencesChange("POMODORO", -60)}
+        label="Pomodoro duration"
+        preferenceName="POMODORO"
+        minMax={[1 * 60, 120 * 60]}
+        step={60}
       />
       <NumberInput
-        label="Short break"
-        value={preferences.modes.SHORT_BREAK.duration}
-        increment={() => handleModePreferencesChange("SHORT_BREAK", 60)}
-        decrement={() => handleModePreferencesChange("SHORT_BREAK", -60)}
+        label="Short break duration"
+        preferenceName="SHORT_BREAK"
+        minMax={[1 * 60, 120 * 60]}
+        step={60}
       />
       <NumberInput
-        label="Long break"
-        value={preferences.modes.LONG_BREAK.duration}
-        increment={() => handleModePreferencesChange("LONG_BREAK", 60)}
-        decrement={() => handleModePreferencesChange("LONG_BREAK", -60)}
+        label="Long break duration"
+        preferenceName="LONG_BREAK"
+        minMax={[1 * 60, 120 * 60]}
+        step={60}
       />
       <NumberInput
         label="Pomodoros until long break"
-        value={preferences.pomodorosUntilLongBreak}
+        preferenceName="pomodorosUntilLongBreak"
+        minMax={[1, 10]}
+        step={1}
         formatToMinutes={false}
-        increment={() =>
-          setPreferences({
-            ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak + 1,
-          })
-        }
-        decrement={() =>
-          setPreferences({
-            ...preferences,
-            pomodorosUntilLongBreak: preferences.pomodorosUntilLongBreak - 1,
-          })
-        }
       />
       <SwitchInput
         label="Autostart next mode"
