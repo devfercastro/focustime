@@ -20,8 +20,8 @@ const PomodoroIndicator = ({
         cy={9}
         r={8}
         fill={isCompleted ? "#000" : "#ccc"}
-        strokeWidth={isCurrent ? 1 : 0}
-        stroke={"red"}
+        strokeWidth={isCurrent ? 2 : 0} // pretty explicit
+        stroke={"#000"}
       />
     </Svg>
   );
@@ -43,7 +43,6 @@ export default function PomodorosTracker() {
         const currentIndex = index + 1; // remember pomodoro index it's non-zero
 
         return {
-          // add 1 to index, because pomodoroIndex it's non-zero
           isCurrent: currentIndex === pomodoroIndex,
           isCompleted: currentIndex < pomodoroIndex,
         } as PomodoroIndicatorProps;
