@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Vibration } from "react-native";
 
 // TODO: change to a minor value to a more smooth progress bar animation (prefered 16ms for 60fps or 33ms for 30fps)
 // in case of change it update how `timeLeft` is subtracted
@@ -54,6 +55,7 @@ export default function useTimer({
     }
     // if there's no time left change the current mode
     else if (timerState.timeLeft === 0) {
+      Vibration.vibrate(500); // TODO: move this to another place and make it dynamic according to the mode
       handleModeTransition();
     }
 
